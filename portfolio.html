@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Portfolio | Veronorte</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --ink:#1D1F29;--azul-noche:#003B71;--verde-noche:#003B4C;
+  --verde-aurora:#95D600;--amarillo-sol:#FFCE00;
+  --blanco:#FFFFFF;--gris:#8A8A8D;
+  --muted:rgba(255,255,255,0.55);--border:rgba(255,255,255,0.08);
+  --surface:#F4F2ED;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--blanco);font-family:'Open Sans',sans-serif;font-weight:300;overflow-x:hidden;line-height:1.6;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;background:rgba(29,31,41,0.93);backdrop-filter:blur(20px);border-bottom:0.5px solid var(--border);}
+.logo img{height:32px;width:auto;display:block;}
+.nav-links{display:flex;gap:2rem;align-items:center;}
+.nav-links a{font-size:0.7rem;font-weight:400;letter-spacing:0.14em;color:rgba(255,255,255,0.5);text-decoration:none;text-transform:uppercase;transition:color 0.2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--blanco);}
+.nav-sep{width:0.5px;height:14px;background:rgba(255,255,255,0.12);}
+.nav-lang{font-size:0.65rem;letter-spacing:0.14em;color:rgba(255,255,255,0.28);text-transform:uppercase;cursor:pointer;}
+.nav-cta{font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;border:0.5px solid rgba(255,255,255,0.22);padding:0.48rem 1.2rem;color:var(--blanco);text-decoration:none;transition:all 0.2s;}
+.nav-cta:hover{background:var(--blanco);color:var(--ink);}
+.btn{display:inline-block;font-family:'Open Sans',sans-serif;font-weight:400;font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;}
+.btn-primary{background:var(--azul-noche);color:var(--blanco);padding:0.85rem 2rem;}
+.btn-primary:hover{background:#00306A;}
+.btn-ghost{color:rgba(255,255,255,0.5);padding-bottom:2px;border-bottom:0.5px solid rgba(255,255,255,0.22);}
+.btn-ghost:hover{color:var(--blanco);}
+.eyebrow{font-size:0.63rem;letter-spacing:0.22em;text-transform:uppercase;font-weight:400;margin-bottom:1.25rem;display:flex;align-items:center;gap:0.8rem;}
+.eyebrow::before{content:"›";}
+.eyebrow-green{color:var(--verde-aurora);}
+.eyebrow-blue{color:#5B8DB8;}
+footer{background:#0D0F17;border-top:0.5px solid rgba(255,255,255,0.05);padding:2.5rem 4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem;}
+.footer-logo img{height:24px;opacity:0.35;}
+.footer-nav{display:flex;gap:1.75rem;flex-wrap:wrap;}
+.footer-nav a{font-size:0.62rem;color:rgba(255,255,255,0.22);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s;}
+.footer-nav a:hover{color:rgba(255,255,255,0.55);}
+.footer-copy{font-size:0.6rem;color:rgba(255,255,255,0.16);}
+@media(max-width:768px){
+  nav{padding:1.2rem 1.5rem;}
+  .logo img{height:26px;}
+  .nav-links a:not(.nav-cta){display:none;}
+  footer{padding:2rem 1.5rem;flex-direction:column;align-items:flex-start;gap:1.2rem;}
+}</style>
+<style>
+.page-hero{padding:10rem 4rem 6rem;background:var(--verde-noche);border-bottom:0.5px solid rgba(255,255,255,0.06);}
+.page-hero h1{font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;line-height:1.08;max-width:700px;margin-bottom:1.5rem;}
+.page-hero p{font-size:1rem;line-height:1.8;color:rgba(255,255,255,0.6);max-width:520px;font-weight:300;}
+.stats-bar{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:0.5px solid var(--border);}
+.sb{padding:2rem 4rem;border-right:0.5px solid var(--border);background:rgba(0,0,0,0.15);}
+.sb:last-child{border-right:none;}
+.sb-n{font-size:2.4rem;font-weight:300;color:var(--verde-aurora);margin-bottom:0.3rem;letter-spacing:-0.01em;}
+.sb-l{font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);}
+.thesis{padding:6rem 4rem;background:var(--ink);}
+.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(255,255,255,0.06);margin-top:3rem;}
+.tc{background:var(--ink);padding:2.5rem;transition:background 0.3s;}
+.tc:hover{background:rgba(0,59,113,0.15);}
+.tc-n{font-size:2.5rem;font-weight:300;color:rgba(255,255,255,0.05);margin-bottom:1rem;}
+.tc-t{font-size:0.95rem;font-weight:600;margin-bottom:0.6rem;}
+.tc-b{font-size:0.82rem;line-height:1.8;color:rgba(255,255,255,0.42);font-weight:300;}
+.funds-section{padding:6rem 4rem;background:#0B0D14;}
+.funds-intro{display:grid;grid-template-columns:1fr 1fr;gap:5rem;margin-bottom:3.5rem;}
+.funds-intro p{font-size:0.9rem;line-height:1.85;color:rgba(255,255,255,0.5);font-weight:300;}
+.funds-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:rgba(255,255,255,0.05);}
+.fund-item{background:#0B0D14;padding:1.8rem 2rem;transition:background 0.25s;}
+.fund-item:hover{background:rgba(0,59,76,0.3);}
+.fund-name{font-size:0.82rem;font-weight:600;color:var(--blanco);margin-bottom:0.3rem;letter-spacing:0.02em;}
+.fund-type{font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.28);font-weight:400;}
+.fund-item.featured .fund-name{color:var(--verde-aurora);}
+@media(max-width:768px){
+  .page-hero{padding:8rem 1.5rem 4rem;}
+  .stats-bar{grid-template-columns:1fr 1fr;}
+  .sb{padding:1.5rem;}
+  .thesis{padding:4rem 1.5rem;}
+  .tgrid{grid-template-columns:1fr;}
+  .funds-section{padding:4rem 1.5rem;}
+  .funds-intro{grid-template-columns:1fr;gap:1.5rem;}
+  .funds-grid{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo"><img src="data:image/png;base64,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" alt="Veronorte"></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="vision.html">Vision</a>
+    <a href="team.html">Team</a>
+    <div class="nav-sep"></div>
+    <span class="nav-lang">ES / EN</span>
+    <a href="mailto:info@veronorte.com" class="nav-cta">Contact</a>
+  </div>
+</nav>
+<div class="page-hero">
+  <p class="eyebrow eyebrow-green" style="margin-bottom:2rem;">Portfolio</p>
+  <h1>The most iconic and transformational companies of our era</h1>
+  <p>We invest alongside the world's premier venture capital funds — accessing extraordinary companies before they become obvious market leaders.</p>
+</div>
+<div class="stats-bar">
+  <div class="sb"><div class="sb-n">$100M+</div><div class="sb-l">Deployed in U.S. Venture Capital</div></div>
+  <div class="sb"><div class="sb-n">24</div><div class="sb-l">Active Fund Commitments</div></div>
+  <div class="sb"><div class="sb-n">600+</div><div class="sb-l">Portfolio Companies</div></div>
+</div>
+<section class="thesis">
+  <p class="eyebrow eyebrow-green">Investment Themes</p>
+  <h2 style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:300;line-height:1.2;max-width:580px;margin-bottom:0.75rem;">Four macro themes shaping the next decade</h2>
+  <div class="tgrid">
+    <div class="tc"><div class="tc-n">01</div><div class="tc-t">Agentic Shift & Professional Disintermediation</div><div class="tc-b">Software has attained the intelligence to interact autonomously with the physical world. Professional roles are being restructured as AI agents take over complex cognitive tasks across law, medicine, finance, and engineering.</div></div>
+    <div class="tc"><div class="tc-n">02</div><div class="tc-t">AI Bioengineering</div><div class="tc-b">The convergence of AI and life sciences is producing breakthroughs at a pace impossible five years ago. Drug discovery, protein folding, genomic sequencing, and precision medicine are being radically accelerated.</div></div>
+    <div class="tc"><div class="tc-n">03</div><div class="tc-t">The Intelligence Supply Chain</div><div class="tc-b">Every layer of the AI stack — chips, data centers, training infrastructure, deployment tooling — represents a generational investment opportunity. The companies building this foundation will be indispensable for decades.</div></div>
+    <div class="tc"><div class="tc-n">04</div><div class="tc-t">The New Perimeter of Sovereignty</div><div class="tc-b">National security, critical infrastructure, and institutional resilience are being rebuilt by software-native companies. Defense tech, autonomous systems, and cybersecurity form a category that is both urgent and durable.</div></div>
+  </div>
+</section>
+<section class="funds-section">
+  <p class="eyebrow eyebrow-green">Fund Commitments</p>
+  <h2 style="font-size:clamp(1.6rem,3vw,2.4rem);font-weight:300;line-height:1.2;max-width:600px;margin-bottom:2rem;">Premier funds, typically closed to new investors</h2>
+  <div class="funds-intro">
+    <p>Our access to the world's most competitive funds is built on years of co-investments, relationships, and an active presence in Silicon Valley and global innovation ecosystems. We partner with managers who consistently rank in the top decile of venture performance.</p>
+    <p>Through our Fund of Funds structure, Latin American families and institutions gain exposure to a diversified portfolio of ~600 companies across stages — from Series A to pre-IPO — that would otherwise require direct GP relationships and minimum commitments in the tens of millions.</p>
+  </div>
+  <div class="funds-grid">
+    <div class="fund-item featured"><div class="fund-name">Khosla Ventures</div><div class="fund-type">Deep Tech · AI · Climate</div></div>
+    <div class="fund-item featured"><div class="fund-name">Menlo Ventures</div><div class="fund-type">Enterprise · AI Applications</div></div>
+    <div class="fund-item featured"><div class="fund-name">IVP</div><div class="fund-type">Growth · Late Stage</div></div>
+    <div class="fund-item"><div class="fund-name">DFJ Growth</div><div class="fund-type">Growth Equity</div></div>
+    <div class="fund-item"><div class="fund-name">SignalFire</div><div class="fund-type">Data-Driven VC</div></div>
+    <div class="fund-item"><div class="fund-name">NFX</div><div class="fund-type">Network Effects · Seed</div></div>
+    <div class="fund-item"><div class="fund-name">+ 18 More Funds</div><div class="fund-type">Across stages & verticals</div></div>
+  </div>
+  <div style="margin-top:3rem;"><a href="mailto:info@veronorte.com" class="btn btn-primary">Request LP Information</a></div>
+</section>
+<footer>
+  <div class="footer-logo"><img src="data:image/png;base64,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" alt="Veronorte"></div>
+  <div class="footer-nav">
+    <a href="portfolio.html">Portfolio</a>
+    <a href="vision.html">Vision</a>
+    <a href="team.html">Team</a>
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Ethics Hotline</a>
+  </div>
+  <div class="footer-copy">© 2026 Veronorte · Medellín, Colombia</div>
+</footer>
+</body>
+</html>

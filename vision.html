@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Vision | Veronorte</title>
+<style>@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&display=swap');
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --ink:#1D1F29;--azul-noche:#003B71;--verde-noche:#003B4C;
+  --verde-aurora:#95D600;--amarillo-sol:#FFCE00;
+  --blanco:#FFFFFF;--gris:#8A8A8D;
+  --muted:rgba(255,255,255,0.55);--border:rgba(255,255,255,0.08);
+  --surface:#F4F2ED;
+}
+html{scroll-behavior:smooth;}
+body{background:var(--ink);color:var(--blanco);font-family:'Open Sans',sans-serif;font-weight:300;overflow-x:hidden;line-height:1.6;}
+nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.4rem 4rem;background:rgba(29,31,41,0.93);backdrop-filter:blur(20px);border-bottom:0.5px solid var(--border);}
+.logo img{height:32px;width:auto;display:block;}
+.nav-links{display:flex;gap:2rem;align-items:center;}
+.nav-links a{font-size:0.7rem;font-weight:400;letter-spacing:0.14em;color:rgba(255,255,255,0.5);text-decoration:none;text-transform:uppercase;transition:color 0.2s;}
+.nav-links a:hover,.nav-links a.active{color:var(--blanco);}
+.nav-sep{width:0.5px;height:14px;background:rgba(255,255,255,0.12);}
+.nav-lang{font-size:0.65rem;letter-spacing:0.14em;color:rgba(255,255,255,0.28);text-transform:uppercase;cursor:pointer;}
+.nav-cta{font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;border:0.5px solid rgba(255,255,255,0.22);padding:0.48rem 1.2rem;color:var(--blanco);text-decoration:none;transition:all 0.2s;}
+.nav-cta:hover{background:var(--blanco);color:var(--ink);}
+.btn{display:inline-block;font-family:'Open Sans',sans-serif;font-weight:400;font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;text-decoration:none;transition:all 0.2s;}
+.btn-primary{background:var(--azul-noche);color:var(--blanco);padding:0.85rem 2rem;}
+.btn-primary:hover{background:#00306A;}
+.btn-ghost{color:rgba(255,255,255,0.5);padding-bottom:2px;border-bottom:0.5px solid rgba(255,255,255,0.22);}
+.btn-ghost:hover{color:var(--blanco);}
+.eyebrow{font-size:0.63rem;letter-spacing:0.22em;text-transform:uppercase;font-weight:400;margin-bottom:1.25rem;display:flex;align-items:center;gap:0.8rem;}
+.eyebrow::before{content:"›";}
+.eyebrow-green{color:var(--verde-aurora);}
+.eyebrow-blue{color:#5B8DB8;}
+footer{background:#0D0F17;border-top:0.5px solid rgba(255,255,255,0.05);padding:2.5rem 4rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.5rem;}
+.footer-logo img{height:24px;opacity:0.35;}
+.footer-nav{display:flex;gap:1.75rem;flex-wrap:wrap;}
+.footer-nav a{font-size:0.62rem;color:rgba(255,255,255,0.22);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.2s;}
+.footer-nav a:hover{color:rgba(255,255,255,0.55);}
+.footer-copy{font-size:0.6rem;color:rgba(255,255,255,0.16);}
+@media(max-width:768px){
+  nav{padding:1.2rem 1.5rem;}
+  .logo img{height:26px;}
+  .nav-links a:not(.nav-cta){display:none;}
+  footer{padding:2rem 1.5rem;flex-direction:column;align-items:flex-start;gap:1.2rem;}
+}</style>
+<style>
+.page-hero{padding:10rem 4rem 6rem;background:var(--ink);border-bottom:0.5px solid var(--border);}
+.page-hero h1{font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;line-height:1.08;max-width:760px;margin-bottom:1.5rem;}
+.page-hero h1 em{font-style:italic;color:rgba(255,255,255,0.4);}
+.vision-body{padding:7rem 4rem;background:var(--surface);color:#1D1F29;}
+.vision-body .eyebrow{color:var(--azul-noche);}
+.vision-body h2{font-size:clamp(1.5rem,2.8vw,2.2rem);font-weight:300;line-height:1.25;max-width:600px;margin-bottom:2.5rem;color:#1D1F29;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:5rem;}
+.two-col p{font-size:0.92rem;line-height:1.9;color:#3A3D42;margin-bottom:1.5rem;font-weight:300;}
+.pull-quote{border-left:2px solid var(--verde-aurora);padding:1.5rem 2rem;margin:2rem 0;background:rgba(0,59,113,0.04);}
+.pull-quote p{font-size:1.05rem;font-style:italic;color:#1D1F29 !important;font-weight:300;margin:0 !important;}
+.optimism-section{padding:7rem 4rem;background:var(--azul-noche);}
+.optimism-section h2{font-size:clamp(2rem,4vw,3.2rem);font-weight:300;line-height:1.15;max-width:680px;margin-bottom:2rem;}
+.optimism-section h2 strong{font-weight:300;color:var(--verde-aurora);}
+.optimism-section p{font-size:0.95rem;line-height:1.85;color:rgba(255,255,255,0.6);max-width:560px;font-weight:300;margin-bottom:1.5rem;}
+.mission-values{padding:7rem 4rem;background:#0A0C13;}
+.mv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:rgba(255,255,255,0.05);margin-top:3rem;}
+.mv-card{background:#0A0C13;padding:2.5rem 2rem;}
+.mv-icon{font-size:1.5rem;margin-bottom:1rem;opacity:0.6;}
+.mv-title{font-size:0.9rem;font-weight:600;margin-bottom:0.6rem;}
+.mv-body{font-size:0.82rem;line-height:1.8;color:rgba(255,255,255,0.42);font-weight:300;}
+@media(max-width:768px){
+  .page-hero{padding:8rem 1.5rem 4rem;}
+  .vision-body{padding:5rem 1.5rem;}
+  .two-col{grid-template-columns:1fr;gap:0;}
+  .optimism-section{padding:5rem 1.5rem;}
+  .mission-values{padding:5rem 1.5rem;}
+  .mv-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo"><img src="data:image/png;base64,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" alt="Veronorte"></a>
+  <div class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="portfolio.html">Portfolio</a>
+    <a href="vision.html">Vision</a>
+    <a href="team.html">Team</a>
+    <div class="nav-sep"></div>
+    <span class="nav-lang">ES / EN</span>
+    <a href="mailto:info@veronorte.com" class="nav-cta">Contact</a>
+  </div>
+</nav>
+<div class="page-hero">
+  <p class="eyebrow eyebrow-green" style="margin-bottom:2rem;">Vision</p>
+  <h1>We invest in <em>optimism.</em><br>And in the people building<br>the future.</h1>
+</div>
+<section class="vision-body">
+  <p class="eyebrow" style="color:var(--azul-noche);">The opportunity</p>
+  <h2>The most significant wealth creation of our generation is unfolding within private markets</h2>
+  <div class="two-col">
+    <div>
+      <p>Often invisible and out of reach for traditional investors in Latin America and across the globe. For years, Veronorte has cultivated exclusive access to the world's premier venture capital funds in the United States.</p>
+      <p>We work alongside the visionaries who identify transformational companies before they become obvious market leaders, capturing value long before it reaches the public eye.</p>
+      <div class="pull-quote"><p>"We work alongside the visionaries who identify transformational companies before they become obvious market leaders."</p></div>
+    </div>
+    <div>
+      <p>We are witnessing an unprecedented era of technological evolution. For the first time, software has attained the intelligence to interact autonomously with the physical world, disrupting every industry and creating entirely new markets.</p>
+      <p>We recognize a clear gap between private capital and truly competitive venture capital opportunities. Our mission is to bridge that gap by building connections grounded in trust, transparency, and institutional rigor.</p>
+      <p>Through our "Fund of Funds" model, we provide an accessible and organized gateway for our investors — offering more than just extraordinary returns: a front-row seat to the emerging knowledge and themes redefining the global economy.</p>
+    </div>
+  </div>
+</section>
+<section class="optimism-section">
+  <h2>We choose to invest in <strong>optimism.</strong></h2>
+  <p>We are driven by the conviction that capital should work toward building a better, more sustainable future. Technology is the ultimate catalyst for solving humanity's greatest challenges.</p>
+  <p>Veronorte is the bridge that allows families and institutions to participate in the construction of that future — enabling a world of greater well-being, development, and shared prosperity.</p>
+  <p style="font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--verde-aurora);font-weight:400;margin-top:2rem;">› futuro compartido</p>
+</section>
+<section class="mission-values">
+  <p class="eyebrow eyebrow-green">Our Principles</p>
+  <h2 style="font-size:clamp(1.5rem,2.8vw,2.2rem);font-weight:300;line-height:1.2;max-width:560px;margin-bottom:0;">How we work and what we believe</h2>
+  <div class="mv-grid">
+    <div class="mv-card"><div class="mv-icon">◎</div><div class="mv-title">Institutional Rigor</div><div class="mv-body">We apply the analytical discipline of institutional investment banking to every fund selection decision. No opportunism — only rigorous process.</div></div>
+    <div class="mv-card"><div class="mv-icon">◈</div><div class="mv-title">Exclusive Access</div><div class="mv-body">Our relationships with top-tier GPs were built over a decade of co-investments and active presence in Silicon Valley — not through a database, but through trust.</div></div>
+    <div class="mv-card"><div class="mv-icon">◇</div><div class="mv-title">Radical Transparency</div><div class="mv-body">Our LPs receive full visibility into portfolio performance, fund metrics, and our thinking. We treat our investors as partners, not just capital.</div></div>
+  </div>
+</section>
+<footer>
+  <div class="footer-logo"><img src="data:image/png;base64,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" alt="Veronorte"></div>
+  <div class="footer-nav">
+    <a href="portfolio.html">Portfolio</a>
+    <a href="vision.html">Vision</a>
+    <a href="team.html">Team</a>
+    <a href="#">Privacy</a>
+    <a href="#">Terms</a>
+    <a href="#">Ethics Hotline</a>
+  </div>
+  <div class="footer-copy">© 2026 Veronorte · Medellín, Colombia</div>
+</footer>
+</body>
+</html>
