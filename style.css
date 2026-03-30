@@ -86,7 +86,7 @@ footer{background:#0D0F17;border-top:0.5px solid rgba(149,214,0,0.08);padding:2.
 .pc-n{font-size:2.8rem;font-weight:300;color:#95D600;line-height:1;margin-bottom:1.25rem;letter-spacing:-0.02em;opacity:0.35;}
 .pc:hover .pc-n{opacity:0.6;}
 .pc-t{font-size:0.95rem;font-weight:600;margin-bottom:0.65rem;color:var(--blanco);}
-.pc-b{font-size:0.83rem;line-height:1.8;color:rgba(255,255,255,0.42);font-weight:300;}
+.pc-b{font-size:0.82rem;line-height:1.8;color:rgba(255,255,255,0.42);font-weight:300;}
 
 /* ── Homepage: Mission Strip ── */
 .mission-strip{background:linear-gradient(135deg,var(--azul-noche) 0%,var(--verde-noche) 100%);padding:6rem 4rem;display:flex;align-items:center;justify-content:space-between;gap:4rem;flex-wrap:wrap;position:relative;overflow:hidden;}
@@ -94,14 +94,14 @@ footer{background:#0D0F17;border-top:0.5px solid rgba(149,214,0,0.08);padding:2.
 .mission-strip-left{max-width:600px;position:relative;z-index:1;}
 .ms-tag{font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--verde-aurora);margin-bottom:1rem;font-weight:400;}
 .ms-quote{font-size:clamp(1.4rem,2.8vw,2.2rem);font-weight:300;line-height:1.35;color:var(--blanco);font-style:italic;}
-.ms-quote strong{font-weight:300;color:var(--amarillo-sol);font-style:normal;}
+.ms-quote strong{font-weight:300;color:#95D600;font-style:normal;}
 
 /* ── Shared: Page Hero ── */
 .page-hero{padding:11rem 4rem 6rem;border-bottom:0.5px solid rgba(149,214,0,0.08);position:relative;overflow:hidden;}
 .page-hero::after{content:'';position:absolute;right:0;top:0;width:40%;height:100%;background:radial-gradient(ellipse at 80% 50%,rgba(0,59,113,0.2) 0%,transparent 70%);pointer-events:none;}
 .page-hero h1{font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;line-height:1.08;max-width:860px;margin-bottom:1.5rem;position:relative;z-index:1;}
 .page-hero h1 em{font-style:italic;color:rgba(149,214,0,0.45);}
-.page-hero p{font-size:1.1rem;line-height:1.8;color:rgba(255,255,255,0.6);max-width:640px;font-weight:300;position:relative;z-index:1;}
+.page-hero p{font-size:1.35rem;line-height:1.7;color:rgba(255,255,255,0.6);max-width:640px;font-weight:300;position:relative;z-index:1;}
 
 /* ── Portfolio Page ── */
 .stats-bar{display:grid;grid-template-columns:repeat(4,1fr);border-bottom:0.5px solid var(--border);}
@@ -120,17 +120,20 @@ footer{background:#0D0F17;border-top:0.5px solid rgba(149,214,0,0.08);padding:2.
 .funds-section{padding:6rem 4rem;background:#0B0D14;}
 .funds-intro{display:grid;grid-template-columns:1fr 1fr;gap:5rem;margin-bottom:3.5rem;}
 .funds-intro p{font-size:1.1rem;line-height:1.85;color:rgba(255,255,255,0.5);font-weight:300;}
-.funds-detail-grid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:rgba(149,214,0,0.05);margin-top:2rem;}
-.fund-card{background:#0B0D14;padding:2.5rem;transition:all 0.3s;border-left:2px solid transparent;}
-.fund-card:hover{background:rgba(0,59,76,0.15);border-left-color:var(--verde-aurora);}
-.fund-card .fund-name{font-size:1rem;font-weight:600;color:var(--blanco);margin-bottom:0.4rem;}
-.fund-card .fund-name a{color:var(--verde-aurora);text-decoration:none;transition:color 0.2s;}
-.fund-card .fund-name a:hover{color:var(--amarillo-sol);}
-.fund-card .fund-type{font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);font-weight:400;margin-bottom:1rem;}
-.fund-logo{height:28px;width:auto;display:block;margin-bottom:0.4rem;transition:opacity 0.2s;}
-.fund-logo:hover{opacity:0.8;}
+/* Logo Grid — hover/tap to reveal */
+.logo-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(149,214,0,0.06);margin-top:2.5rem;}
+.logo-tile{position:relative;background:#0B0D14;aspect-ratio:1/1;overflow:hidden;cursor:pointer;transition:all 0.3s;}
+.tile-face{display:flex;align-items:center;justify-content:center;width:100%;height:100%;padding:2rem;transition:opacity 0.3s;}
+.tile-face img{max-height:36px;max-width:80%;width:auto;height:auto;display:block;opacity:0.7;transition:opacity 0.3s;}
+.tile-face a{display:flex;align-items:center;justify-content:center;width:100%;height:100%;}
+.tile-text-logo{font-size:1.3rem;font-weight:600;color:rgba(255,255,255,0.7);letter-spacing:0.05em;text-decoration:none;transition:opacity 0.3s;}
+.tile-text-logo a{color:inherit;text-decoration:none;}
 .fund-logo-invert{filter:brightness(0) invert(1);}
-.fund-desc{font-size:0.82rem;line-height:1.8;color:rgba(255,255,255,0.45);font-weight:300;}
+.tile-info{position:absolute;inset:0;background:rgba(0,59,76,0.95);padding:1.5rem;display:flex;flex-direction:column;justify-content:center;opacity:0;transform:translateY(8px);transition:opacity 0.3s,transform 0.3s;pointer-events:none;overflow-y:auto;}
+.tile-type{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--verde-aurora);margin-bottom:0.6rem;font-weight:400;}
+.tile-desc{font-size:0.75rem;line-height:1.7;color:rgba(255,255,255,0.7);font-weight:300;}
+.logo-tile:hover .tile-info,.logo-tile.active .tile-info{opacity:1;transform:translateY(0);pointer-events:auto;}
+.logo-tile:hover .tile-face,.logo-tile.active .tile-face{opacity:0;}
 
 /* ── Team Page ── */
 .team-section{padding:6rem 4rem;background:var(--ink);}
@@ -255,6 +258,7 @@ footer{background:#0D0F17;border-top:0.5px solid rgba(149,214,0,0.08);padding:2.
 @media(max-width:900px){
   .team-grid{grid-template-columns:1fr 1fr;}
   .funds-intro{grid-template-columns:1fr;gap:2rem;}
+  .logo-grid{grid-template-columns:repeat(3,1fr);}
 }
 
 /* ── Responsive: Mobile ── */
@@ -306,7 +310,7 @@ footer{background:#0D0F17;border-top:0.5px solid rgba(149,214,0,0.08);padding:2.
   /* Page Hero */
   .page-hero{padding:7rem 1.5rem 3rem;}
   .page-hero h1{font-size:clamp(1.8rem,7vw,2.8rem);}
-  .page-hero p{font-size:0.9rem;}
+  .page-hero p{font-size:1.1rem;}
 
   /* Portfolio Page */
   .thesis{padding:3.5rem 1.5rem;}
@@ -314,9 +318,10 @@ footer{background:#0D0F17;border-top:0.5px solid rgba(149,214,0,0.08);padding:2.
   .tgrid .tc{padding:2rem 1.5rem;}
   .funds-section{padding:3.5rem 1.5rem;}
   .funds-intro{grid-template-columns:1fr;gap:1.5rem;}
-  .funds-detail-grid{grid-template-columns:1fr;}
-  .fund-card{padding:2rem 1.5rem;}
-  .fund-logo{height:22px;}
+  .logo-grid{grid-template-columns:repeat(2,1fr);}
+  .logo-tile{aspect-ratio:1/1;}
+  .tile-info{padding:1.2rem;}
+  .tile-desc{font-size:0.7rem;line-height:1.6;}
 
   /* Vision Page */
   .vision-statement{padding:3.5rem 1.5rem 2.5rem;}
