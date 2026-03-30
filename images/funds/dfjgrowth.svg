@@ -1,0 +1,20 @@
+<svg width="280" height="140" viewBox="0 0 280 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <title>DFJ Growth Logo</title>
+  <!-- Globe/diamond wireframe icon -->
+  <g transform="translate(140, 45)" fill="none" stroke="white" stroke-width="1.8">
+    <!-- Outer diamond shape -->
+    <path d="M0,-32 L28,0 L0,32 L-28,0 Z"/>
+    <!-- Horizontal lines across globe -->
+    <ellipse cx="0" cy="0" rx="28" ry="10" transform="rotate(0)"/>
+    <!-- Vertical center line -->
+    <path d="M0,-32 C10,-16 10,16 0,32"/>
+    <path d="M0,-32 C-10,-16 -10,16 0,32"/>
+    <!-- Horizontal equator -->
+    <line x1="-28" y1="0" x2="28" y2="0"/>
+    <!-- Top and bottom arcs -->
+    <path d="M-20,-15 Q0,-20 20,-15"/>
+    <path d="M-20,15 Q0,20 20,15"/>
+  </g>
+  <!-- DFJ GROWTH text -->
+  <text x="140" y="110" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="600" font-size="30" letter-spacing="4" fill="white">DFJ GROWTH</text>
+</svg>
