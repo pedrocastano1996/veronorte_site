@@ -6,12 +6,17 @@
 <title>Team | Veronorte</title>
 <meta name="description" content="Meet the Veronorte team — decades of experience in investments, technology, and communications across Latin America, the U.S., and global markets.">
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="favicon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <nav>
   <a href="index.html" class="logo"><img src="images/logo.png" alt="Veronorte"></a>
-  <div class="nav-links">
+  <button class="nav-toggle" aria-label="Menu" aria-expanded="false" onclick="document.querySelector('.nav-links').classList.toggle('open');this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='true'?'false':'true')"><span></span><span></span><span></span></button>
+  <div class="nav-links"><button class="nav-close" aria-label="Close menu" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-toggle').setAttribute('aria-expanded','false')">&times;</button>
     <a href="index.html">Home</a>
     <a href="portfolio.html">Portfolio</a>
     <a href="vision.html">Vision</a>
@@ -41,6 +46,7 @@
         <div class="tc-cred">Postgraduate in Geopolitics, EAFIT</div>
       </div>
       <div class="tc-tags"><span class="tc-tag">Strategy</span><span class="tc-tag">Investment Analysis</span><span class="tc-tag">Investor Relations</span></div>
+      <a href="https://www.linkedin.com/in/ACoAAATQVRUBBsq_uwd1Z7-4PdhqCTNZETpgWjA" target="_blank" rel="noopener" class="tc-linkedin"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>
     </div>
     <div class="tc">
       <img class="tc-photo" loading="lazy" src="images/felipe.jpg" alt="Felipe Valencia">
@@ -53,6 +59,7 @@
         <div class="tc-cred">Master in Web Communications, IED Rome</div>
       </div>
       <div class="tc-tags"><span class="tc-tag">Portfolio Strategy</span><span class="tc-tag">Sourcing</span><span class="tc-tag">Ecosystem Development</span></div>
+      <a href="https://www.linkedin.com/in/felipevalencia/" target="_blank" rel="noopener" class="tc-linkedin"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>
     </div>
     <div class="tc">
       <img class="tc-photo" loading="lazy" src="images/catalina.jpg" alt="Catalina Franco Restrepo">
@@ -64,6 +71,7 @@
         <div class="tc-cred">M.A. International Relations, U. Complutense Madrid — Honors</div>
       </div>
       <div class="tc-tags"><span class="tc-tag">Strategic Comms</span><span class="tc-tag">Storytelling</span><span class="tc-tag">Global Perspective</span></div>
+      <a href="https://www.linkedin.com/in/catalinafrancor/" target="_blank" rel="noopener" class="tc-linkedin"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>
     </div>
     <div class="tc">
       <img class="tc-photo" loading="lazy" src="images/david.jpg" alt="David Toro">
@@ -75,6 +83,7 @@
         <div class="tc-cred">Master in Engineering and Management, Politecnico di Torino</div>
       </div>
       <div class="tc-tags"><span class="tc-tag">Corporate Finance</span><span class="tc-tag">Investment Banking</span><span class="tc-tag">Investment Analysis</span></div>
+      <a href="https://www.linkedin.com/in/davidtorog/" target="_blank" rel="noopener" class="tc-linkedin"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>
     </div>
     <div class="tc">
       <img class="tc-photo" loading="lazy" src="images/pedro.jpg" alt="Pedro Castaño">
@@ -86,6 +95,7 @@
         <div class="tc-cred">Specialization in Big Data & Business Intelligence</div>
       </div>
       <div class="tc-tags"><span class="tc-tag">Operations</span><span class="tc-tag">Portfolio Analysis</span><span class="tc-tag">Business Intelligence</span></div>
+      <a href="https://www.linkedin.com/in/pedro-casta%C3%B1o-a10212b5/" target="_blank" rel="noopener" class="tc-linkedin"><svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>LinkedIn</a>
     </div>
   </div>
 </section>

@@ -6,12 +6,17 @@
 <title>Vision | Veronorte</title>
 <meta name="description" content="Veronorte invests in optimism. We believe technology is the catalyst for solving humanity's greatest challenges and creating shared prosperity.">
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="favicon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <nav>
   <a href="index.html" class="logo"><img src="images/logo.png" alt="Veronorte"></a>
-  <div class="nav-links">
+  <button class="nav-toggle" aria-label="Menu" aria-expanded="false" onclick="document.querySelector('.nav-links').classList.toggle('open');this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='true'?'false':'true')"><span></span><span></span><span></span></button>
+  <div class="nav-links"><button class="nav-close" aria-label="Close menu" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-toggle').setAttribute('aria-expanded','false')">&times;</button>
     <a href="index.html">Home</a>
     <a href="portfolio.html">Portfolio</a>
     <a href="vision.html">Vision</a>
@@ -41,7 +46,7 @@
   </div>
 </section>
 <section class="optimism-section">
-  <p class="eyebrow eyebrow-green">futuro compartido</p>
+  <p class="eyebrow eyebrow-green">Shared Future</p>
   <h2>We choose to invest in <strong>optimism.</strong></h2>
   <p>We are driven by the conviction that capital should work toward building a better, more sustainable future. Technology is the ultimate catalyst for solving humanity's greatest challenges.</p>
   <p>Veronorte is the bridge that allows families and institutions to participate in the construction of that future — enabling a world of greater well-being, development, and shared prosperity.</p>

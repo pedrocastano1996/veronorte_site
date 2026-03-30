@@ -3,15 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>Veronorte | futuro compartido</title>
+<title>Veronorte | Shared Future</title>
 <meta name="description" content="Veronorte bridges Latin American private capital with the world's leading venture capital funds. Fund of Funds investing in 600+ transformational companies.">
 <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="favicon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
 <nav>
   <a href="index.html" class="logo"><img src="images/logo.png" alt="Veronorte"></a>
-  <div class="nav-links">
+  <button class="nav-toggle" aria-label="Menu" aria-expanded="false" onclick="document.querySelector('.nav-links').classList.toggle('open');this.setAttribute('aria-expanded',this.getAttribute('aria-expanded')==='true'?'false':'true')"><span></span><span></span><span></span></button>
+  <div class="nav-links"><button class="nav-close" aria-label="Close menu" onclick="document.querySelector('.nav-links').classList.remove('open');document.querySelector('.nav-toggle').setAttribute('aria-expanded','false')">&times;</button>
     <a href="index.html">Home</a>
     <a href="portfolio.html">Portfolio</a>
     <a href="vision.html">Vision</a>
@@ -28,7 +33,7 @@
   <div class="hero-ring"></div>
   <div class="hero-content">
     <p class="hero-tag">Fund of Funds · Global Venture Capital · Latin America</p>
-    <h1>Bridging Latin American<br>private capital with the<br><em>world's leading venture capital funds</em></h1>
+    <h1>Bridging Latin America<br>with the <em>world's leading<br>venture capital funds</em></h1>
     <p class="hero-lead">Where vision and optimism shape the future to create extraordinary value.</p>
     <div class="hero-ctas">
       <a href="portfolio.html" class="btn btn-primary">Explore Our Portfolio</a>
@@ -44,25 +49,26 @@
 </div>
 <section class="portfolio">
   <p class="eyebrow eyebrow-green">Investment Thesis</p>
-  <h2 style="font-size:clamp(1.7rem,3.2vw,2.6rem);font-weight:300;line-height:1.2;max-width:640px;margin-bottom:1rem;">Global venture capital drives the technologies that define the future of industries and world economies</h2>
-  <p style="font-size:0.9rem;line-height:1.8;color:rgba(255,255,255,0.5);max-width:540px;font-weight:300;">Alongside the world's leading funds, Veronorte invests in the most iconic and transformational companies. We are the bridge to the knowledge and extraordinary returns born from shaping the future.</p>
+  <h2>Global venture capital drives the technologies that define the future of industries and world economies</h2>
+  <p>Alongside the world's leading funds, Veronorte invests in the most iconic and transformational companies. We are the bridge to the knowledge and extraordinary returns born from shaping the future.</p>
+  <h3 style="font-size:clamp(1.2rem,2.2vw,1.6rem);font-weight:300;line-height:1.3;margin-top:3rem;margin-bottom:0;color:rgba(255,255,255,0.7);">Four emerging themes shaping the next decade</h3>
   <div class="pgrid">
     <div class="pc"><div class="pc-n">01</div><div class="pc-t">Agentic Shift & Professional Disintermediation</div><div class="pc-b">Software has attained the intelligence to interact autonomously with the physical world — disrupting every industry and creating entirely new markets.</div></div>
     <div class="pc"><div class="pc-n">02</div><div class="pc-t">AI Bioengineering</div><div class="pc-b">The convergence of artificial intelligence and biological sciences enabling breakthroughs in drug discovery, genomics, and precision medicine at unprecedented speed.</div></div>
     <div class="pc"><div class="pc-n">03</div><div class="pc-t">The Intelligence Supply Chain</div><div class="pc-b">The infrastructure layer powering the AI era — from semiconductors and data centers to model training pipelines and deployment tooling at scale.</div></div>
     <div class="pc"><div class="pc-n">04</div><div class="pc-t">The New Perimeter of Sovereignty</div><div class="pc-b">Defense technology, cybersecurity, and strategic autonomy redefined by software-native companies building the next generation of institutional resilience.</div></div>
   </div>
-  <div style="margin-top:3rem;display:flex;gap:1.5rem;align-items:center;">
+  <div class="cta-row">
     <a href="portfolio.html" class="btn btn-primary">Full Portfolio</a>
     <a href="team.html" class="btn btn-ghost">Meet the Team →</a>
   </div>
 </section>
 <div class="mission-strip">
   <div class="mission-strip-left">
-    <p class="ms-tag">› futuro compartido</p>
+    <p class="ms-tag">› Shared Future</p>
     <p class="ms-quote">We choose to invest in <strong>optimism.</strong> We believe technology is the ultimate catalyst for solving humanity's greatest challenges.</p>
   </div>
-  <a href="vision.html" class="btn btn-outline" style="border:0.5px solid rgba(255,255,255,0.25);padding:0.85rem 2rem;color:var(--blanco);flex-shrink:0;">Read Our Vision →</a>
+  <a href="vision.html" class="btn btn-outline">Read Our Vision →</a>
 </div>
 <footer>
   <div class="footer-logo"><img src="images/logo.png" alt="Veronorte"></div>
