@@ -132,8 +132,12 @@ footer{background:#0D0F17;border-top:0.5px solid rgba(149,214,0,0.08);padding:2.
 .tile-info{position:absolute;inset:0;background:rgba(0,59,76,0.95);padding:1.5rem;display:flex;flex-direction:column;justify-content:center;opacity:0;transform:translateY(8px);transition:opacity 0.3s,transform 0.3s;pointer-events:none;overflow-y:auto;}
 .tile-type{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--verde-aurora);margin-bottom:0.6rem;font-weight:400;}
 .tile-desc{font-size:0.75rem;line-height:1.7;color:rgba(255,255,255,0.7);font-weight:300;}
+.tile-link{display:inline-block;margin-top:0.8rem;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--verde-aurora);text-decoration:none;font-weight:400;transition:color 0.2s;}
+.tile-link:hover{color:var(--amarillo-sol);}
 .logo-tile:hover .tile-info,.logo-tile.active .tile-info{opacity:1;transform:translateY(0);pointer-events:auto;}
 .logo-tile:hover .tile-face,.logo-tile.active .tile-face{opacity:0;}
+.coinvest-section{padding:4rem 5rem;background:var(--ink);}
+.coinvest-section .logo-grid{grid-template-columns:repeat(3,1fr);}
 
 /* ── Team Page ── */
 .team-section{padding:6rem 4rem;background:var(--ink);}
@@ -259,6 +263,8 @@ footer{background:#0D0F17;border-top:0.5px solid rgba(149,214,0,0.08);padding:2.
   .team-grid{grid-template-columns:1fr 1fr;}
   .funds-intro{grid-template-columns:1fr;gap:2rem;}
   .logo-grid{grid-template-columns:repeat(3,1fr);}
+  .coinvest-section .logo-grid{grid-template-columns:repeat(3,1fr);}
+  .coinvest-section{padding:3.5rem 2.5rem;}
 }
 
 /* ── Responsive: Mobile ── */
@@ -319,6 +325,8 @@ footer{background:#0D0F17;border-top:0.5px solid rgba(149,214,0,0.08);padding:2.
   .funds-section{padding:3.5rem 1.5rem;}
   .funds-intro{grid-template-columns:1fr;gap:1.5rem;}
   .logo-grid{grid-template-columns:repeat(2,1fr);}
+  .coinvest-section .logo-grid{grid-template-columns:repeat(2,1fr);}
+  .coinvest-section{padding:3.5rem 1.5rem;}
   .logo-tile{aspect-ratio:1/1;}
   .tile-info{padding:1.2rem;}
   .tile-desc{font-size:0.7rem;line-height:1.6;}
