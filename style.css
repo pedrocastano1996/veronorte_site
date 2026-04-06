@@ -16,7 +16,7 @@
   --surface:#F4F2ED;
 }
 html{scroll-behavior:smooth;}
-body{background:var(--ink);color:var(--blanco);font-family:'Open Sans',sans-serif;font-weight:300;overflow-x:hidden;line-height:1.6;}
+body{background:var(--ink);color:var(--blanco);font-family:'Open Sans',sans-serif;font-weight:300;overflow-x:hidden;line-height:1.6;overflow-wrap:break-word;word-wrap:break-word;}
 
 /* ── Nav ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:0.9rem 4rem;background:rgba(29,31,41,0.97);backdrop-filter:blur(20px);border-bottom:0.5px solid var(--border);}
@@ -287,7 +287,7 @@ footer{background:#0D0F17;border-top:0.5px solid rgba(149,214,0,0.08);padding:2.
   /* Hero */
   .hero{min-height:calc(100vh - 60px);min-height:calc(100svh - 60px);padding:5rem 1.5rem 3.5rem;}
   .hero h1 br,.page-hero h1 br{display:none;}
-  .hero h1{font-size:clamp(2rem,8vw,3.2rem);}
+  .hero h1{font-size:clamp(2rem,8vw,3.2rem);hyphens:auto;-webkit-hyphens:auto;}
   .hero-lead{max-width:100%;}
   .hero-ctas{flex-direction:column;gap:1rem;align-items:stretch;}
   .hero-ctas .btn{text-align:center;padding:1rem 2rem;}
@@ -301,6 +301,7 @@ footer{background:#0D0F17;border-top:0.5px solid rgba(149,214,0,0.08);padding:2.
   .stats-bar{grid-template-columns:1fr 1fr;}
   .sb{padding:1.5rem;}
   .sb-n{font-size:1.8rem;}
+  .sb-l{overflow-wrap:break-word;word-wrap:break-word;}
 
   /* Portfolio */
   .portfolio{padding:4rem 1.5rem;}
@@ -315,21 +316,28 @@ footer{background:#0D0F17;border-top:0.5px solid rgba(149,214,0,0.08);padding:2.
 
   /* Page Hero */
   .page-hero{padding:7rem 1.5rem 3rem;}
-  .page-hero h1{font-size:clamp(1.8rem,7vw,2.8rem);}
+  .page-hero h1{font-size:clamp(1.8rem,7vw,2.8rem);hyphens:auto;-webkit-hyphens:auto;}
   .page-hero p{font-size:1.1rem;}
 
   /* Portfolio Page */
   .thesis{padding:3.5rem 1.5rem;}
+  .thesis h2{hyphens:auto;-webkit-hyphens:auto;}
   .tgrid{grid-template-columns:1fr;}
   .tgrid .tc{padding:2rem 1.5rem;}
+  .tc-t{overflow-wrap:break-word;word-wrap:break-word;}
+  .tc-b{overflow-wrap:break-word;word-wrap:break-word;}
   .funds-section{padding:3.5rem 1.5rem;}
+  .funds-section h2{hyphens:auto;-webkit-hyphens:auto;}
   .funds-intro{grid-template-columns:1fr;gap:1.5rem;}
+  .funds-intro p{overflow-wrap:break-word;word-wrap:break-word;}
   .logo-grid{grid-template-columns:repeat(2,1fr);}
   .coinvest-section .logo-grid{grid-template-columns:repeat(2,1fr);}
   .coinvest-section{padding:3.5rem 1.5rem;}
+  .coinvest-section h2{hyphens:auto;-webkit-hyphens:auto;}
   .logo-tile{aspect-ratio:1/1;}
   .tile-info{padding:1.2rem;}
-  .tile-desc{font-size:0.7rem;line-height:1.6;}
+  .tile-desc{font-size:0.7rem;line-height:1.6;overflow-wrap:break-word;word-wrap:break-word;}
+  .tile-type{overflow-wrap:break-word;word-wrap:break-word;}
 
   /* Vision Page */
   .vision-statement{padding:3.5rem 1.5rem 2.5rem;}
@@ -346,7 +354,7 @@ footer{background:#0D0F17;border-top:0.5px solid rgba(149,214,0,0.08);padding:2.
   /* Team */
   .team-section{padding:4rem 1.5rem;}
   .team-grid{gap:1.5rem;}
-  .tc-bio{font-size:0.85rem;}
+  .tc-bio{font-size:0.85rem;overflow-wrap:break-word;word-wrap:break-word;}
   .access-section{padding:4rem 1.5rem;text-align:center;}
   .access-section p{max-width:100%;margin-left:auto;margin-right:auto;}
   .access-section .btn{align-self:center;}
