@@ -65,7 +65,7 @@ footer{background:#0D0F17;border-top:0.5px solid rgba(149,214,0,0.08);padding:2.
 .hero-tag{font-size:0.65rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--verde-aurora);margin-bottom:2.5rem;display:flex;align-items:center;gap:1rem;font-weight:400;}
 .hero-tag::after{content:'';flex:0 0 36px;height:0.5px;background:var(--verde-aurora);}
 .hero h1{font-size:clamp(2.8rem,6vw,5.5rem);font-weight:300;line-height:1.07;letter-spacing:-0.01em;margin-bottom:2rem;}
-.hero h1 em{font-style:italic;color:#95D600;}
+.hero h1 .accent{color:#95D600;}
 .hero-lead{font-size:1.35rem;font-weight:300;line-height:1.7;color:rgba(255,255,255,0.58);max-width:760px;margin-bottom:3rem;}
 .hero-ctas{display:flex;gap:1.5rem;align-items:center;flex-wrap:wrap;}
 
@@ -93,14 +93,14 @@ footer{background:#0D0F17;border-top:0.5px solid rgba(149,214,0,0.08);padding:2.
 .mission-strip::before{content:'';position:absolute;right:-5%;top:-50%;width:40%;height:200%;background:radial-gradient(ellipse at center,rgba(149,214,0,0.06) 0%,transparent 70%);pointer-events:none;}
 .mission-strip-left{max-width:600px;position:relative;z-index:1;}
 .ms-tag{font-size:0.62rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--verde-aurora);margin-bottom:1rem;font-weight:400;}
-.ms-quote{font-size:clamp(1.4rem,2.8vw,2.2rem);font-weight:300;line-height:1.35;color:var(--blanco);font-style:italic;}
+.ms-quote{font-size:clamp(1.4rem,2.8vw,2.2rem);font-weight:300;line-height:1.35;color:var(--blanco);}
 .ms-quote strong{font-weight:300;color:#95D600;font-style:normal;}
 
 /* ── Shared: Page Hero ── */
 .page-hero{padding:11rem 4rem 6rem;border-bottom:0.5px solid rgba(149,214,0,0.08);position:relative;overflow:hidden;}
 .page-hero::after{content:'';position:absolute;right:0;top:0;width:40%;height:100%;background:radial-gradient(ellipse at 80% 50%,rgba(0,59,113,0.2) 0%,transparent 70%);pointer-events:none;}
 .page-hero h1{font-size:clamp(2.5rem,5vw,4.5rem);font-weight:300;line-height:1.08;max-width:860px;margin-bottom:1.5rem;position:relative;z-index:1;}
-.page-hero h1 em{font-style:italic;color:rgba(149,214,0,0.45);}
+.page-hero h1 .accent{color:rgba(149,214,0,0.45);}
 .page-hero p{font-size:1.35rem;line-height:1.7;color:rgba(255,255,255,0.6);max-width:640px;font-weight:300;position:relative;z-index:1;}
 
 /* ── Portfolio Page ── */
@@ -170,7 +170,7 @@ footer{background:#0D0F17;border-top:0.5px solid rgba(149,214,0,0.08);padding:2.
 .vision-narrative{padding:5rem 4rem 6rem;background:var(--ink);border-top:0.5px solid var(--border);}
 .vision-narrative-inner{max-width:640px;margin:0 auto;}
 .vision-narrative-inner p{font-size:1.1rem;line-height:2.1;color:rgba(255,255,255,0.55);font-weight:300;margin-bottom:2rem;}
-.vision-highlight{font-size:clamp(1.3rem,2.5vw,1.7rem) !important;font-style:italic;font-weight:300 !important;line-height:1.55 !important;color:var(--blanco) !important;padding:2.5rem 0;margin:1rem 0 2.5rem !important;border-top:1px solid rgba(149,214,0,0.15);border-bottom:1px solid rgba(149,214,0,0.15);}
+.vision-highlight{font-size:clamp(1.3rem,2.5vw,1.7rem) !important;font-weight:300 !important;line-height:1.55 !important;color:var(--blanco) !important;padding:2.5rem 0;margin:1rem 0 2.5rem !important;border-top:1px solid rgba(149,214,0,0.15);border-bottom:1px solid rgba(149,214,0,0.15);}
 
 .optimism-section{padding:7rem 4rem;background:linear-gradient(160deg,var(--azul-noche) 0%,var(--verde-noche) 100%);position:relative;overflow:hidden;text-align:center;}
 .optimism-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 60% at 50% 40%,rgba(149,214,0,0.05) 0%,transparent 70%);pointer-events:none;}
