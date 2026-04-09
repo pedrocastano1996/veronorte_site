@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Veronorte FoF I — Portfolio Analytics</title>
+<meta name="robots" content="noindex, nofollow">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;1,300&display=swap">
+<link rel="icon" href="favicon.ico" sizes="32x32">
+<link rel="icon" href="favicon-192.png" sizes="192x192">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<style>
+  /* ── Password Gate ── */
+  .pw-gate {
+    position: fixed; inset: 0; z-index: 9999;
+    background: #060B18;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Open Sans', sans-serif;
+  }
+  .pw-gate.hidden { display: none; }
+  .pw-box {
+    text-align: center;
+    max-width: 380px;
+    padding: 0 24px;
+  }
+  .pw-box img {
+    height: 40px;
+    margin-bottom: 2.5rem;
+    opacity: 0.6;
+  }
+  .pw-box h2 {
+    font-size: 1.1rem;
+    font-weight: 300;
+    color: rgba(255,255,255,0.55);
+    margin-bottom: 1.5rem;
+    letter-spacing: 0.04em;
+  }
+  .pw-box input {
+    width: 100%;
+    padding: 0.85rem 1.2rem;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 6px;
+    color: #E0E6EF;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 300;
+    letter-spacing: 0.06em;
+    outline: none;
+    transition: border-color 0.2s;
+  }
+  .pw-box input::placeholder { color: rgba(255,255,255,0.2); }
+  .pw-box input:focus { border-color: rgba(149,214,0,0.35); }
+  .pw-box input.error { border-color: rgba(224,122,95,0.6); animation: shake 0.4s ease; }
+  .pw-box button {
+    width: 100%;
+    margin-top: 0.75rem;
+    padding: 0.85rem;
+    background: #95D600;
+    color: #1D1F29;
+    border: none;
+    border-radius: 6px;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .pw-box button:hover { background: #a8e61a; }
+  .pw-hint {
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.15);
+    margin-top: 1.2rem;
+  }
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-6px); }
+    40%, 80% { transform: translateX(6px); }
+  }
+
+  /* ── Analytics Content (hidden until authenticated) ── */
+  .analytics-content { display: none; }
+  .analytics-content.visible { display: block; }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #060B18; color: #E0E6EF; font-family: 'Inter', system-ui, sans-serif; min-height: 100vh; }
+  .page { max-width: 920px; margin: 0 auto; padding: 36px 24px 32px; }
+
+  .top-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 28px; }
+  .logo-area { display: flex; align-items: center; gap: 10px; }
+  .logo-mark { width: 28px; height: 28px; border-radius: 6px; background: linear-gradient(135deg, #2ECDA7 0%, #1A8A6E 100%); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; color: #060B18; }
+  .logo-text { font-size: 15px; font-weight: 600; letter-spacing: 0.04em; color: #C0CCE0; }
+  .logo-sub { font-size: 10px; color: #5A6A80; font-weight: 400; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 1px; }
+  .report-badge { font-size: 10px; color: #5A6A80; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.06); border-radius: 4px; padding: 3px 10px; letter-spacing: 0.05em; text-transform: uppercase; }
+
+  .title-section { margin-bottom: 20px; }
+  .title-section h1 { font-size: 24px; font-weight: 700; color: #F0F4FA; line-height: 1.2; }
+
+  .tabs { display: flex; gap: 4px; margin-bottom: 16px; background: rgba(255,255,255,0.03); border-radius: 8px; padding: 3px; width: fit-content; }
+  .tab-btn { font-family: inherit; font-size: 12px; font-weight: 600; letter-spacing: 0.03em; padding: 7px 20px; border-radius: 6px; border: none; cursor: pointer; background: transparent; color: #5A6A80; transition: all 0.15s; }
+  .tab-btn.active { background: rgba(46,205,167,0.12); color: #2ECDA7; }
+  .tab-btn:hover:not(.active) { color: #8A9AB0; }
+
+  .context-note { margin: 12px 0 14px; padding: 10px 14px; background: rgba(255,255,255,0.02); border-left: 3px solid #2ECDA740; border-radius: 0 6px 6px 0; font-size: 11.5px; line-height: 1.6; color: #6A7A90; }
+
+  .controls { display: flex; gap: 14px; padding: 0 0 12px; align-items: center; flex-wrap: wrap; }
+  .controls-label { font-size: 10px; color: #4A5A70; font-weight: 500; text-transform: uppercase; letter-spacing: 0.06em; }
+  .vint-btn { display: flex; align-items: center; gap: 5px; background: transparent; border: 1.5px solid transparent; border-radius: 6px; padding: 3px 10px; cursor: pointer; transition: all 0.15s ease; font-family: inherit; }
+  .vint-btn.active { border-color: var(--vc) !important; background: rgba(255,255,255,0.03); }
+  .vint-dot { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  .vint-text { font-size: 11px; font-weight: 600; }
+  .hint { margin-left: auto; font-size: 10px; color: #3A4A60; display: flex; align-items: center; gap: 6px; }
+
+  .chart-wrap { position: relative; background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.04); border-radius: 12px; padding: 4px; margin-bottom: 16px; }
+  .chart-svg { display: block; overflow: visible; }
+
+  .fund-card { position: absolute; background: #0F1A2E; border: 1px solid rgba(46,205,167,0.15); color: #D0DAE8; border-radius: 12px; padding: 16px 18px; width: 320px; z-index: 100; box-shadow: 0 12px 40px rgba(0,0,0,0.5); font-size: 12px; line-height: 1.4; display: none; }
+  .fund-card.visible { display: block; }
+  .card-close { position: absolute; top: 8px; right: 10px; background: none; border: none; color: #4A5A70; font-size: 14px; cursor: pointer; padding: 2px 6px; border-radius: 4px; }
+  .card-close:hover { color: #C0CCE0; background: rgba(255,255,255,0.06); }
+  .card-name { font-size: 14px; font-weight: 700; color: #F0F4FA; margin-bottom: 2px; padding-right: 24px; }
+  .card-vintage { font-size: 11px; color: #5A7A70; margin-bottom: 10px; }
+  .card-metrics { margin-bottom: 4px; display: flex; gap: 14px; flex-wrap: wrap; }
+  .metric-block { }
+  .metric-label { font-size: 9px; text-transform: uppercase; letter-spacing: 0.08em; color: #8A9AB0; margin-bottom: 2px; }
+  .metric-val-q4 { font-size: 15px; font-weight: 700; color: #2ECDA7; }
+  .metric-val-q3 { font-size: 11px; font-weight: 500; color: #8A9AB0; margin-left: 4px; }
+  .card-benchmark { font-size: 11px; margin: 8px 0 12px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.05); }
+  .bm-label { color: #8A9AB0; }
+  .bm-value { font-weight: 700; margin-left: 4px; }
+  .bm-top-decile { color: #2ECDA7; }
+  .bm-top-quartile { color: #5AE0B8; }
+  .bm-above-median { color: #88C8A0; }
+  .bm-below-median { color: #C08A70; }
+
+  .expand-btn { display: flex; align-items: center; gap: 6px; width: 100%; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 6px; padding: 7px 10px; cursor: pointer; color: #5A7A90; font-size: 11px; font-weight: 600; font-family: inherit; margin-bottom: 5px; transition: all 0.15s; text-align: left; }
+  .expand-btn:hover { background: rgba(255,255,255,0.04); color: #8AAAB0; }
+  .expand-btn .chev { display: inline-block; transition: transform 0.2s; font-size: 10px; width: 12px; }
+  .expand-btn.open .chev { transform: rotate(90deg); }
+  .expand-content { max-height: 0; overflow: hidden; transition: max-height 0.25s ease; padding: 0 2px; }
+  .expand-content.open { max-height: 200px; }
+  .commentary-text { font-size: 11px; color: #6A8A90; font-style: italic; padding: 4px 0 10px; line-height: 1.5; }
+  .holding-row { display: flex; justify-content: space-between; padding: 3px 0; font-size: 11px; }
+  .holding-name { color: #8AA0B0; }
+  .holding-moic { color: #C0D0E0; font-weight: 600; font-variant-numeric: tabular-nums; }
+
+  .summary { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+  .stat-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.04); border-radius: 10px; padding: 12px 14px; }
+  .stat-value { font-size: 22px; font-weight: 700; color: #F0F4FA; }
+  .stat-label { font-size: 10px; font-weight: 600; color: #5A6A80; line-height: 1.3; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.04em; }
+  .stat-sub { font-size: 10px; color: #3A4A60; margin-top: 2px; }
+  @media (max-width: 640px) {
+    .summary { grid-template-columns: repeat(2, 1fr); }
+    .page { padding: 20px 14px; }
+    .fund-card { width: 280px; }
+    .title-section h1 { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Password Gate -->
+<div class="pw-gate" id="pwGate">
+  <div class="pw-box">
+    <img src="images/logo.png" alt="Veronorte">
+    <h2>This page is restricted to authorized investors</h2>
+    <form id="pwForm" onsubmit="return checkPassword(event)">
+      <input type="password" id="pwInput" placeholder="Enter access code" autocomplete="off" autofocus>
+      <button type="submit">Access</button>
+    </form>
+    <p class="pw-hint">Contact your Veronorte representative for access.</p>
+  </div>
+</div>
+
+<!-- Analytics Content -->
+<div class="analytics-content" id="analyticsContent">
+<div class="page">
+  <div class="top-bar">
+    <div class="logo-area">
+      <div class="logo-mark">V</div>
+      <div><div class="logo-text">Veronorte</div><div class="logo-sub">Fund of Funds I</div></div>
+    </div>
+    <div class="report-badge">LP Portfolio Analytics</div>
+  </div>
+
+  <div class="title-section">
+    <h1 id="mainTitle">TVPI vs. % Capital Called — Q4-25</h1>
+  </div>
+
+  <div class="tabs">
+    <button class="tab-btn active" id="tabTvpi" onclick="switchTab('tvpi')">TVPI</button>
+    <button class="tab-btn" id="tabMoic" onclick="switchTab('moic')">MOIC</button>
+  </div>
+
+  <div class="context-note" id="contextNote"></div>
+  <div class="controls" id="controls"></div>
+  <div class="chart-wrap" id="chartWrap">
+    <svg id="chart" class="chart-svg" width="100%" viewBox="0 0 820 520"></svg>
+    <div class="fund-card" id="fundCard"></div>
+  </div>
+  <div class="summary" id="summary"></div>
+</div>
+</div>
+
+<script>
+// ── Password Gate ──
+function checkPassword(e) {
+  e.preventDefault();
+  var input = document.getElementById('pwInput');
+  if (input.value === 'Futurocompartido') {
+    document.getElementById('pwGate').classList.add('hidden');
+    document.getElementById('analyticsContent').classList.add('visible');
+    initDashboard();
+  } else {
+    input.classList.add('error');
+    input.value = '';
+    input.placeholder = 'Incorrect code';
+    setTimeout(function() { input.classList.remove('error'); }, 400);
+  }
+  return false;
+}
+
+function initDashboard() {
+// Q4 is primary. Q3 is secondary + benchmark reference.
+// Foothill: no Q4 TVPI/MOIC, uses Q3 values flagged.
+const funds = [
+  { name: "Khosla Ventures VIII", vintage: 2023,
+    tvpiQ4: 1.46, tvpiQ3: 1.36, moicQ4: 1.76, moicQ3: 1.64,
+    pctCalled: 69.1, benchmark: "TOP QUARTILE",
+    holdings: [["Field AI", 9.61], ["Rhoda AI", 3.74], ["Cognition AI", 3.49]],
+    commentary: "Clear outperformer. One of the earliest funds to begin deployment in the portfolio. Several core bets have received meaningful markups. Consistent with its Top Quartile positioning as of Q3-25 benchmark." },
+  { name: "Reach IV", vintage: 2023,
+    tvpiQ4: 0.99, tvpiQ3: 0.95, moicQ4: 1.16, moicQ3: 1.12,
+    pctCalled: 59.0, benchmark: "BELOW MEDIAN",
+    holdings: [["Cartwheel", 1.38], ["GPTZero", 3.00], ["Suraasa", 1.67]],
+    commentary: "Deliberately slower deployment: the GP paused strategically while assessing AI\u2019s impact on education and exploring a new vertical in healthcare. Over 70% of invested capital has been deployed from 2024 onward. A 1.16x MOIC confirms the underlying portfolio is beginning to generate value." },
+  { name: "GG1", vintage: 2023,
+    tvpiQ4: 1.20, tvpiQ3: 1.18, moicQ4: 1.37, moicQ3: 1.33,
+    pctCalled: 89.8, benchmark: "ABOVE MEDIAN",
+    holdings: [["Rillet (GNAU)", 4.21], ["Dust", 3.04], ["Cavela", 4.43]],
+    commentary: "Pre-seed fund whose companies naturally take longer to mature. However, portfolio quality is high: in GP calls, companies show strong operational traction and significant valuation upside ahead." },
+  { name: "Menlo Ventures XVI", vintage: 2023,
+    tvpiQ4: 1.54, tvpiQ3: 1.12, moicQ4: 1.80, moicQ3: 1.23,
+    pctCalled: 90.0, benchmark: "ABOVE MEDIAN",
+    holdings: [["Databricks", 3.30], ["Skild AI", 2.83], ["Good Job Games", 1.38]],
+    commentary: "Strong Q4 performance driven by significant markups materializing across the portfolio. This would likely position the fund in Top Quartile comparatively against the Q3-25 benchmark." },
+  { name: "XYZ VC Fund IV", vintage: 2023,
+    tvpiQ4: 1.10, tvpiQ3: 1.06, moicQ4: 1.29, moicQ3: 1.23,
+    pctCalled: 73.0, benchmark: "BELOW MEDIAN",
+    holdings: [["NationGraph", 2.78], ["Yurts", 2.32], ["Pryzm Dynamics", 4.00]],
+    commentary: "Although classified as vintage 2023, over 75% of invested capital has been deployed from 2024 onward, making it effectively younger than its benchmark peers. Portfolio under construction with positive early signals." },
+  { name: "XYZ Go Faster II", vintage: 2023,
+    tvpiQ4: 1.76, tvpiQ3: 1.62, moicQ4: 2.01, moicQ3: 1.83,
+    pctCalled: 98.0, benchmark: "TOP DECILE",
+    holdings: [["Forterra Blockchain", 3.33], ["Memoir dba Cohere", 2.28], ["Apex Technology", 2.93]],
+    commentary: "Highly concentrated opportunity fund whose bets are delivering. Concentration amplifies the effect of recent markups, with MOIC crossing 2.0x. Best performing fund in the portfolio." },
+  { name: "Foothill Ventures III", vintage: 2023,
+    tvpiQ4: null, tvpiQ3: 1.00, moicQ4: null, moicQ3: 1.16,
+    pctCalled: 60.0, benchmark: "BELOW MEDIAN",
+    holdings: [["DocEquity dba", 3.41], ["Aether Fuels", 1.80], ["Corvic", 1.44]],
+    commentary: "Deep tech fund at a very early stage, where companies naturally take longer to mature. Over 70% of deployment has occurred from 2024 onward. Q4 data not yet available \u2014 shown at Q3 values." },
+  { name: "GTMfund II", vintage: 2023,
+    tvpiQ4: 1.07, tvpiQ3: 1.07, moicQ4: 1.27, moicQ3: 1.23,
+    pctCalled: 100.0, benchmark: "ABOVE MEDIAN",
+    holdings: [["Writer", 7.15], ["AgentPaid", 2.81], ["Cotiss", 1.68]],
+    commentary: "Over 75% of capital has been invested from 2024 onward. Recent developments are expected to translate into visible markups soon. The fund carries a meaningful fee and expense load that takes time to dilute, which weighs on current TVPI." },
+  { name: "IVP XVIII", vintage: 2024,
+    tvpiQ4: 1.15, tvpiQ3: 1.14, moicQ4: 1.26, moicQ3: 1.27,
+    pctCalled: 50.0, benchmark: null,
+    holdings: [["Perplexity", 1.84], ["Abridge AI", 1.68], ["Perplexity", 4.92]],
+    commentary: "Very encouraging early signals. Perplexity has raised capital at meaningful markups in a very short timeframe. Established late-stage GP with a fund still in construction phase." },
+  { name: "NFX Capital Fund IV", vintage: 2024,
+    tvpiQ4: 0.95, tvpiQ3: 0.94, moicQ4: 1.03, moicQ3: 1.05,
+    pctCalled: 45.0, benchmark: null,
+    holdings: [["Koi Security", 2.65], ["Acid Labs Inc", 1.00], ["Evalon AI Ltd.", 1.00]],
+    commentary: "45% called. Koi Security (2.65x) is the only meaningful markup so far \u2014 consistent with a seed fund in J-curve." },
+  { name: "DFJ Growth V", vintage: 2024,
+    tvpiQ4: 1.64, tvpiQ3: 1.24, moicQ4: 2.01, moicQ3: 1.44,
+    pctCalled: 39.0, benchmark: null,
+    holdings: [["OpenAI", 1.61], ["xAI", 1.46], ["Anduril", 1.24]],
+    commentary: "Late-stage investments in highly advanced, high-profile companies that have received very significant markups, generating extraordinary performance in a very short time. Still a fund under construction with 39% called." },
+  { name: "GG2", vintage: 2024,
+    tvpiQ4: 1.11, tvpiQ3: 1.01, moicQ4: 1.28, moicQ3: 1.11,
+    pctCalled: 42.5, benchmark: null,
+    holdings: [["Accrual", 3.21], ["Alcove", 1.00], ["Arini AI", 1.00]],
+    commentary: "Early-stage investments with good signals and some emerging breakout companies. Fund under construction with a positive trajectory." },
+  { name: "G2 Venture Partners III", vintage: 2025,
+    tvpiQ4: 0.88, tvpiQ3: 0.90, moicQ4: 1.00, moicQ3: 1.00,
+    pctCalled: 17.0, benchmark: null,
+    holdings: [["Cast AI", 1.00]],
+    commentary: "Too early to draw conclusions on fund performance." },
+  { name: "Kindred Ventures IV", vintage: 2025,
+    tvpiQ4: 0.97, tvpiQ3: 0.93, moicQ4: 1.03, moicQ3: 1.00,
+    pctCalled: 46.0, benchmark: null,
+    holdings: [["Frame Payments", 1.00], ["Creatify Lab", 1.00], ["Sophont", 1.00]],
+    commentary: "Too early to draw conclusions on fund performance." },
+  { name: "Signal Fire Seed V", vintage: 2025,
+    tvpiQ4: 1.00, tvpiQ3: 0.96, moicQ4: 1.12, moicQ3: 1.11,
+    pctCalled: 31.5, benchmark: null,
+    holdings: [["White Rabbit", 1.00], ["Flagler Health", 1.00], ["Conduct", 1.00]],
+    commentary: "Too early to draw conclusions on fund performance." },
+  { name: "SignalFire Early IV", vintage: 2025,
+    tvpiQ4: 0.93, tvpiQ3: 0.95, moicQ4: 1.00, moicQ3: 1.00,
+    pctCalled: 33.0, benchmark: null,
+    holdings: [["Siro Technology", 1.00], ["Verse Medical", 1.00], ["Affiniti Finance", 1.00]],
+    commentary: "Too early to draw conclusions on fund performance." },
+  { name: "2048 Ventures III", vintage: 2025,
+    tvpiQ4: 0.90, tvpiQ3: 0.93, moicQ4: 1.00, moicQ3: 1.00,
+    pctCalled: 33.3, benchmark: null,
+    holdings: [["Nimbus Health", 1.00], ["Nionyx Bio", 1.00], ["Colla Health", 1.00]],
+    commentary: "The GP\u2019s capital call model (~30% called in a single tranche annually) makes the fund appear more mature than it actually is. Very new fund, still under construction." },
+  { name: "S32 Fund 6", vintage: 2025,
+    tvpiQ4: 0.78, tvpiQ3: null, moicQ4: 1.01, moicQ3: null,
+    pctCalled: 9.0, benchmark: null,
+    holdings: [],
+    commentary: "Too early to draw conclusions on fund performance." },
+];
+
+const vintageConfig = {
+  2023: { color: "#00CFDD" },
+  2024: { color: "#FF6B8A" },
+  2025: { color: "#FFB830" },
+};
+
+const benchmarkCSS = { "TOP DECILE": "bm-top-decile", "TOP QUARTILE": "bm-top-quartile", "ABOVE MEDIAN": "bm-above-median", "BELOW MEDIAN": "bm-below-median" };
+const benchmarkRingColors = { "TOP DECILE": "#2ECDA7", "TOP QUARTILE": "#5AE0B8", "ABOVE MEDIAN": "#88C8A0", "BELOW MEDIAN": "#C08A70" };
+
+const M = { top: 48, right: 32, bottom: 64, left: 64 };
+const W = 820, H = 520;
+const PW = W - M.left - M.right, PH = H - M.top - M.bottom;
+const X_MIN = 0, X_MAX = 108;
+
+const yRanges = {
+  tvpi: { min: 0.68, max: 1.85, ticks: [0.7, 0.8, 0.9, 1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8], parLine: 1.0 },
+  moic: { min: 0.90, max: 2.10, ticks: [1.0, 1.1, 1.2, 1.3, 1.4, 1.5, 1.6, 1.7, 1.8, 1.9, 2.0], parLine: 1.0 },
+};
+
+function sx(v) { return M.left + ((v - X_MIN) / (X_MAX - X_MIN)) * PW; }
+function sy(v, mode) { const r = yRanges[mode]; return M.top + PH - ((v - r.min) / (r.max - r.min)) * PH; }
+
+const NS = "http://www.w3.org/2000/svg";
+function el(tag, attrs = {}, parent) {
+  const e = document.createElementNS(NS, tag);
+  for (const [k, v] of Object.entries(attrs)) {
+    if (k === 'textContent') e.textContent = v;
+    else e.setAttribute(k.replace(/([A-Z])/g, '-$1').toLowerCase(), v);
+  }
+  if (parent) parent.appendChild(e);
+  return e;
+}
+
+let activeVintage = null;
+let currentMode = 'tvpi';
+const svg = document.getElementById('chart');
+const card = document.getElementById('fundCard');
+
+function closeCard() { card.classList.remove('visible'); }
+document.addEventListener('click', (e) => {
+  if (!e.target.closest('.fund-card') && !e.target.closest('.dot-group')) closeCard();
+});
+
+// Get Q4 value (primary), fallback to Q3
+function getVal(fund, mode) {
+  const q4 = mode === 'tvpi' ? fund.tvpiQ4 : fund.moicQ4;
+  const q3 = mode === 'tvpi' ? fund.tvpiQ3 : fund.moicQ3;
+  return q4 !== null ? q4 : q3;
+}
+function getQ4(fund, mode) { return mode === 'tvpi' ? fund.tvpiQ4 : fund.moicQ4; }
+function getQ3(fund, mode) { return mode === 'tvpi' ? fund.tvpiQ3 : fund.moicQ3; }
+
+window.switchTab = function(mode) {
+  currentMode = mode;
+  document.getElementById('tabTvpi').classList.toggle('active', mode === 'tvpi');
+  document.getElementById('tabMoic').classList.toggle('active', mode === 'moic');
+  const label = mode === 'tvpi' ? 'TVPI' : 'MOIC';
+  document.getElementById('mainTitle').textContent = `${label} vs. % Capital Called \u2014 Q4-25`;
+  updateContextNote();
+  closeCard();
+  render();
+  renderSummary();
+};
+
+const contextNotes = {
+  tvpi: "Given the early stage of these funds, benchmark comparisons (Q3-25) may carry noise \u2014 a single markup event within a quarter can shift a fund\u2019s ranking between quartiles. As vintage cohorts mature and deployment levels converge, benchmark positioning will become increasingly meaningful.",
+  moic: "No fund in the portfolio currently shows a MOIC below 1.0x \u2014 markdowns have not yet materialized, consistent with the early stage of these investments. When comparing MOIC to TVPI, keep in mind that fund fees and expenses weigh on TVPI, particularly for smaller funds where the fee load represents a larger share of NAV.",
+};
+
+function updateContextNote() {
+  document.getElementById('contextNote').innerHTML = `<strong style="color:#8A9AB0">Note:</strong> ${contextNotes[currentMode]}`;
+}
+
+window.toggleExpand = function(btn) {
+  btn.classList.toggle('open');
+  btn.nextElementSibling.classList.toggle('open');
+};
+
+function showCard(fund, cx, cy) {
+  const svgEl = document.getElementById('chart');
+  const rect = svgEl.getBoundingClientRect();
+  const scaleX = rect.width / W, scaleY = rect.height / H;
+  const pixelX = cx * scaleX, pixelY = cy * scaleY;
+  const mode = currentMode;
+
+  // Build metrics for both TVPI and MOIC
+  function buildMetric(m) {
+    const label = m.toUpperCase();
+    const q4 = m === 'tvpi' ? fund.tvpiQ4 : fund.moicQ4;
+    const q3 = m === 'tvpi' ? fund.tvpiQ3 : fund.moicQ3;
+    if (q4 !== null) {
+      const q3Html = q3 !== null ? `<span class="metric-val-q3">(Q3: ${q3.toFixed(2)}x)</span>` : '';
+      return `<div class="metric-block"><div class="metric-label">${label}</div><div><span class="metric-val-q4">${q4.toFixed(2)}x</span>${q3Html}</div></div>`;
+    } else if (q3 !== null) {
+      return `<div class="metric-block"><div class="metric-label">${label} (Q3)</div><div><span class="metric-val-q3" style="font-size:15px;font-weight:700">${q3.toFixed(2)}x</span></div></div>`;
+    }
+    return '';
+  }
+
+  // % Called
+  const calledHtml = `<div class="metric-block"><div class="metric-label">% Called</div><div><span class="metric-val-q4">${fund.pctCalled.toFixed(1)}%</span></div></div>`;
+
+  // Benchmark (TVPI tab only)
+  let bmHtml = '';
+  if (mode === 'tvpi') {
+    if (fund.benchmark) {
+      bmHtml = `<div class="card-benchmark"><span class="bm-label">Benchmark Q3-25:</span><span class="bm-value ${benchmarkCSS[fund.benchmark]}">${fund.benchmark}</span></div>`;
+    } else {
+      bmHtml = `<div class="card-benchmark"><span class="bm-label">Benchmark:</span><span class="bm-value" style="color:#3A4A60"> N/A \u2014 fund too young</span></div>`;
+    }
+  } else {
+    bmHtml = `<div style="margin-bottom:10px;padding-bottom:10px;border-bottom:1px solid rgba(255,255,255,0.05)"></div>`;
+  }
+
+  // Holdings
+  const holdingsRows = fund.holdings.map(([n, m]) =>
+    `<div class="holding-row"><span class="holding-name">${n}</span><span class="holding-moic">${m.toFixed(2)}x</span></div>`
+  ).join('');
+  const holdingsBtn = fund.holdings.length > 0
+    ? `<button class="expand-btn" onclick="toggleExpand(this)"><span class="chev">\u25B8</span> Top Holdings (MOIC Q3-25)</button><div class="expand-content"><div class="holdings-list" style="padding:4px 0 8px">${holdingsRows}</div></div>`
+    : '';
+
+  card.innerHTML = `
+    <button class="card-close" onclick="closeCard()">\u2715</button>
+    <div class="card-name">${fund.name}</div>
+    <div class="card-vintage">Vintage ${fund.vintage}</div>
+    <div class="card-metrics">
+      ${buildMetric('tvpi')}
+      ${buildMetric('moic')}
+      ${calledHtml}
+    </div>
+    ${bmHtml}
+    <button class="expand-btn" onclick="toggleExpand(this)"><span class="chev">\u25B8</span> Performance Commentary</button>
+    <div class="expand-content"><div class="commentary-text">${fund.commentary}</div></div>
+    ${holdingsBtn}
+  `;
+
+  let left = pixelX + 18, top = pixelY - 80;
+  if (left + 330 > rect.width) left = pixelX - 338;
+  if (top < 0) top = 4;
+  if (top + 320 > rect.height) top = rect.height - 330;
+  card.style.left = left + 'px';
+  card.style.top = top + 'px';
+  card.classList.add('visible');
+}
+
+function render() {
+  svg.innerHTML = '';
+  const mode = currentMode;
+  const yr = yRanges[mode];
+
+  el('rect', { x: M.left, y: M.top, width: PW, height: PH, fill: 'rgba(255,255,255,0.015)', rx: 4 }, svg);
+
+  // Zone 1: Early Deployment (0-30%)
+  el('rect', { x: M.left, y: M.top, width: sx(30) - M.left, height: PH, fill: 'rgba(255,255,255,0.02)' }, svg);
+  el('text', { x: (M.left + sx(30)) / 2, y: M.top + PH / 2 - 6, textAnchor: 'middle', fontSize: 9, fill: '#3A4A60', fontWeight: 700, letterSpacing: '0.06em', textContent: 'EARLY' }, svg);
+  el('text', { x: (M.left + sx(30)) / 2, y: M.top + PH / 2 + 6, textAnchor: 'middle', fontSize: 9, fill: '#3A4A60', fontWeight: 700, letterSpacing: '0.06em', textContent: 'DEPLOYMENT' }, svg);
+
+  // Zone 2: Early Outperformers (30-80%, above par)
+  el('rect', { x: sx(30), y: M.top, width: sx(80) - sx(30), height: sy(yr.parLine, mode) - M.top, fill: 'rgba(46,205,167,0.04)' }, svg);
+  el('text', { x: (sx(30) + sx(80)) / 2, y: M.top + 18, textAnchor: 'middle', fontSize: 9.5, fill: '#2A8A6A', fontWeight: 700, letterSpacing: '0.06em', opacity: 0.7, textContent: 'EARLY OUTPERFORMERS' }, svg);
+
+  // Zone 3: Active J-Curve (30-80%, below par) — TVPI only
+  if (mode === 'tvpi') {
+    el('rect', { x: sx(30), y: sy(yr.parLine, mode), width: sx(80) - sx(30), height: sy(yr.min, mode) - sy(yr.parLine, mode), fill: 'rgba(232,133,74,0.04)' }, svg);
+    el('text', { x: (sx(30) + sx(80)) / 2, y: sy(yr.min, mode) - 10, textAnchor: 'middle', fontSize: 9.5, fill: '#8A6A4A', fontWeight: 700, letterSpacing: '0.06em', opacity: 0.6, textContent: 'ACTIVE J-CURVE' }, svg);
+  }
+
+  // Zone 4: Advanced Deployment (80%+)
+  el('rect', { x: sx(80), y: M.top, width: sx(X_MAX) - sx(80), height: PH, fill: 'rgba(107,138,232,0.04)' }, svg);
+  el('text', { x: (sx(80) + sx(X_MAX)) / 2, y: M.top + PH / 2 - 6, textAnchor: 'middle', fontSize: 9, fill: '#5A6AA0', fontWeight: 700, letterSpacing: '0.06em', opacity: 0.7, textContent: 'ADVANCED' }, svg);
+  el('text', { x: (sx(80) + sx(X_MAX)) / 2, y: M.top + PH / 2 + 6, textAnchor: 'middle', fontSize: 9, fill: '#5A6AA0', fontWeight: 700, letterSpacing: '0.06em', opacity: 0.7, textContent: 'DEPLOYMENT' }, svg);
+
+  // Zone dividers
+  el('line', { x1: sx(30), y1: M.top, x2: sx(30), y2: M.top + PH, stroke: '#2A3A50', strokeWidth: 1, strokeDasharray: '4 3' }, svg);
+  el('line', { x1: sx(80), y1: M.top, x2: sx(80), y2: M.top + PH, stroke: '#2A3A50', strokeWidth: 1, strokeDasharray: '4 3' }, svg);
+
+  // Grid Y
+  yr.ticks.forEach(t => {
+    const isPar = t === yr.parLine;
+    el('line', { x1: M.left, y1: sy(t, mode), x2: M.left + PW, y2: sy(t, mode), stroke: isPar ? '#2ECDA750' : '#1A2A3A', strokeWidth: isPar ? 1.2 : 0.5, strokeDasharray: isPar ? '7 4' : 'none' }, svg);
+    el('text', { x: M.left - 8, y: sy(t, mode) + 4, textAnchor: 'end', fontSize: 11, fill: isPar ? '#5ABAAA' : '#3A4A60', fontWeight: isPar ? 700 : 400, textContent: t.toFixed(1) + 'x' }, svg);
+  });
+
+  // Grid X
+  [0, 20, 40, 60, 80, 100].forEach(t => {
+    el('line', { x1: sx(t), y1: M.top, x2: sx(t), y2: M.top + PH, stroke: '#1A2A3A', strokeWidth: 0.5 }, svg);
+    el('text', { x: sx(t), y: M.top + PH + 18, textAnchor: 'middle', fontSize: 11, fill: '#3A4A60', textContent: t + '%' }, svg);
+  });
+
+  // Axis labels
+  el('text', { x: sx((X_MIN + X_MAX) / 2), y: M.top + PH + 48, textAnchor: 'middle', fontSize: 12, fill: '#4A5A70', fontWeight: 600, textContent: '% Capital Called' }, svg);
+  const yLabel = mode === 'tvpi' ? 'TVPI' : 'MOIC';
+  el('text', { x: 14, y: sy((yr.min + yr.max) / 2, mode), textAnchor: 'middle', fontSize: 12, fill: '#4A5A70', fontWeight: 600, textContent: yLabel, transform: `rotate(-90, 14, ${sy((yr.min + yr.max) / 2, mode)})` }, svg);
+
+  // Dots
+  funds.forEach(fund => {
+    const val = getVal(fund, mode);
+    if (val === null || val === undefined) return;
+    const cx = sx(fund.pctCalled), cyy = sy(val, mode);
+    const isActive = !activeVintage || fund.vintage === activeVintage;
+    const color = vintageConfig[fund.vintage].color;
+
+    if (!isActive) {
+      el('circle', { cx, cy: cyy, r: 7, fill: color, opacity: 0.08 }, svg);
+      return;
+    }
+
+    const g = el('g', { class: 'dot-group', style: 'cursor:pointer' }, svg);
+    const glow = el('circle', { cx, cy: cyy, r: 16, fill: color, opacity: 0 }, g);
+    el('circle', { cx, cy: cyy, r: 7, fill: color, stroke: '#0A1020', strokeWidth: 2, opacity: 0.9 }, g);
+
+    if (mode === 'tvpi' && fund.benchmark) {
+      el('circle', { cx, cy: cyy, r: 10.5, fill: 'none', stroke: benchmarkRingColors[fund.benchmark], strokeWidth: 1.8, opacity: 0.5 }, g);
+    }
+
+    g.addEventListener('mouseenter', () => { glow.setAttribute('opacity', '0.1'); });
+    g.addEventListener('mouseleave', () => { glow.setAttribute('opacity', '0'); });
+    g.addEventListener('click', (e) => { e.stopPropagation(); showCard(fund, cx, cyy); });
+  });
+}
+
+function renderControls() {
+  const ctr = document.getElementById('controls');
+  ctr.innerHTML = '<span class="controls-label">Vintage:</span>';
+  Object.entries(vintageConfig).forEach(([yr, cfg]) => {
+    const btn = document.createElement('button');
+    btn.className = 'vint-btn' + (activeVintage === +yr ? ' active' : '');
+    btn.style.setProperty('--vc', cfg.color);
+    btn.innerHTML = `<span class="vint-dot" style="background:${cfg.color}"></span><span class="vint-text" style="color:${cfg.color}">${yr}</span>`;
+    btn.onclick = () => { activeVintage = activeVintage === +yr ? null : +yr; closeCard(); renderControls(); render(); };
+    ctr.appendChild(btn);
+  });
+  const hint = document.createElement('div');
+  hint.className = 'hint';
+  hint.innerHTML = `<svg width="14" height="14" xmlns="${NS}"><circle cx="7" cy="7" r="4" fill="#00CFDD" stroke="#0A1020" stroke-width="1.5"/><circle cx="7" cy="7" r="6.5" fill="none" stroke="#2ECDA7" stroke-width="1.2" opacity="0.4"/></svg> benchmark ring (TVPI only) \u00B7 click dot for details`;
+  ctr.appendChild(hint);
+}
+
+function renderSummary() {
+  const mode = currentMode;
+  const valid = funds.filter(f => getVal(f, mode) !== null);
+  const par = yRanges[mode].parLine;
+  const earlyDeploy = valid.filter(f => f.pctCalled < 30);
+  const outperformers = valid.filter(f => f.pctCalled >= 30 && f.pctCalled < 80 && getVal(f, mode) >= par);
+  const activeJ = valid.filter(f => f.pctCalled >= 30 && f.pctCalled < 80 && getVal(f, mode) < par);
+  const advanced = valid.filter(f => f.pctCalled >= 80);
+  const avgAdv = advanced.length ? (advanced.reduce((s, f) => s + getVal(f, mode), 0) / advanced.length).toFixed(2) : '\u2014';
+  const label = mode.toUpperCase();
+
+  const stats = [
+    { value: earlyDeploy.length, label: 'Early Deployment', sub: '<30% called', accent: '#5C5C6B' },
+    { value: outperformers.length, label: 'Early Outperformers', sub: `30-80% & ${label} \u2265${par.toFixed(1)}x`, accent: '#A4C48C' },
+    { value: activeJ.length, label: mode === 'tvpi' ? 'Active J-Curve' : 'Building Value', sub: `30-80% & ${label} <${par.toFixed(1)}x`, accent: '#D4A574' },
+    { value: advanced.length, label: 'Advanced Deployment', sub: `>80% \u00B7 avg ${label} ${avgAdv}x`, accent: '#8B9CC4' },
+  ];
+
+  const container = document.getElementById('summary');
+  container.innerHTML = '';
+  stats.forEach(s => {
+    const c = document.createElement('div');
+    c.className = 'stat-card';
+    c.style.borderLeft = `3px solid ${s.accent}`;
+    c.innerHTML = `<div class="stat-value">${s.value}</div><div class="stat-label">${s.label}</div><div class="stat-sub">${s.sub}</div>`;
+    container.appendChild(c);
+  });
+}
+
+renderControls();
+updateContextNote();
+render();
+renderSummary();
+} // end initDashboard
+</script>
+</body>
+</html>
