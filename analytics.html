@@ -166,12 +166,12 @@
 <div class="pw-gate" id="pwGate">
   <div class="pw-box">
     <img src="images/logo.png" alt="Veronorte">
-    <h2>This page is restricted to authorized investors</h2>
+
     <form id="pwForm" onsubmit="return checkPassword(event)">
-      <input type="password" id="pwInput" placeholder="Enter access code" autocomplete="off" autofocus>
+      <input type="password" id="pwInput" placeholder="Enter password" autocomplete="off" autofocus>
       <button type="submit">Access</button>
     </form>
-    <p class="pw-hint">Contact your Veronorte representative for access.</p>
+
   </div>
 </div>
 
@@ -358,6 +358,7 @@ const svg = document.getElementById('chart');
 const card = document.getElementById('fundCard');
 
 function closeCard() { card.classList.remove('visible'); }
+window.closeCard = closeCard;
 document.addEventListener('click', (e) => {
   if (!e.target.closest('.fund-card') && !e.target.closest('.dot-group')) closeCard();
 });
