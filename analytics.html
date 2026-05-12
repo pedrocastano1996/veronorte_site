@@ -11,8 +11,8 @@
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="favicon-192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
-<script src="dashboard_data.js"></script>
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" defer></script>
+<script src="dashboard_data.js" defer></script>
 <style>
   /* ── Password Gate ── */
   .pw-gate {
@@ -318,6 +318,12 @@ function checkPassword(e) {
 
 function initDashboard() {
 
+if (typeof SCATTER_DATA === 'undefined') {
+  document.getElementById('mainTitle').textContent = 'Loading data…';
+  setTimeout(initDashboard, 500);
+  return;
+}
+
 // Build fund array for a given quarter from SCATTER_DATA
 var selectedQuarter = SCATTER_DATA.quarters[SCATTER_DATA.quarters.length - 1];
 var funds = [];
@@ -438,7 +444,7 @@ window.switchTab = function(mode) {
   document.querySelector('.page').classList.toggle('dash-active', isDash);
 
   if (isDash) {
-    if (!window._dashRendered) { renderDashboard(); window._dashRendered = true; }
+    if (!window._dashRendered && typeof Plotly !== 'undefined' && typeof renderDashboard === 'function') { renderDashboard(); window._dashRendered = true; }
     return;
   }
 
