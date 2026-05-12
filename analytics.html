@@ -11,6 +11,8 @@
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="favicon-192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
+<script src="https://cdn.plot.ly/plotly-2.35.2.min.js"></script>
+<script src="dashboard_data.js"></script>
 <style>
   /* ── Password Gate ── */
   .pw-gate {
@@ -158,6 +160,36 @@
     .fund-card { width: 280px; }
     .title-section h1 { font-size: 20px; }
   }
+
+  /* ── Dashboard Tab ── */
+  .page.dash-active { max-width: 1200px; }
+  #dashboardPanel { padding: 0 0 40px; }
+  .dash-info { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; }
+  .dash-date { font-size: 10px; color: #5A6A80; letter-spacing: 0.06em; text-transform: uppercase; }
+  .kpi-row { display: flex; gap: 12px; margin-bottom: 24px; flex-wrap: wrap; }
+  .kpi { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.06); border-radius: 10px; padding: 14px 18px; flex: 1; min-width: 130px; }
+  .kpi-label { display: block; font-size: 0.58rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; color: #5A6A80; margin-bottom: 4px; }
+  .kpi-value { display: block; font-size: 1.4rem; font-weight: 300; color: #F0F4FA; }
+  .kpi-sub { display: block; font-size: 0.68rem; margin-top: 2px; color: #5A6A80; }
+  .dash-grid { display: grid; gap: 16px; margin-bottom: 20px; }
+  .dash-grid.two { grid-template-columns: 1fr 1fr; }
+  .dash-grid.full { grid-template-columns: 1fr; }
+  .dash-chart { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.05); border-radius: 10px; padding: 16px; min-height: 320px; }
+  .dash-divider { border: none; border-top: 1px solid rgba(255,255,255,0.06); margin: 8px 0 20px; }
+  .dash-print-btn { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; color: #E0E6EF; font-family: inherit; font-size: 0.7rem; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 16px; cursor: pointer; transition: border-color 0.2s; }
+  .dash-print-btn:hover { border-color: rgba(149,214,0,0.35); }
+  @media (max-width: 900px) {
+    .dash-grid.two { grid-template-columns: 1fr; }
+    .kpi { min-width: 110px; padding: 10px 14px; }
+  }
+  @media print {
+    .pw-gate, .tabs, .dash-print-btn { display: none !important; }
+    .page.dash-active { max-width: 100%; }
+    .kpi, .dash-chart { border-color: #e0e0e0; background: white; }
+    .kpi-value, .kpi-label { color: #1D1F29; }
+    .kpi-sub { color: #666; }
+    .dash-grid { page-break-inside: avoid; break-inside: avoid; }
+  }
 </style>
 </head>
 <body>
@@ -193,6 +225,7 @@
   <div class="tabs">
     <button class="tab-btn active" id="tabTvpi" onclick="switchTab('tvpi')">TVPI</button>
     <button class="tab-btn" id="tabMoic" onclick="switchTab('moic')">MOIC</button>
+    <button class="tab-btn" id="tabDash" onclick="switchTab('dashboard')">Dashboard</button>
   </div>
 
   <div class="context-note" id="contextNote"></div>
@@ -202,6 +235,66 @@
     <div class="fund-card" id="fundCard"></div>
   </div>
   <div class="summary" id="summary"></div>
+
+  <!-- Dashboard Panel (hidden until Dashboard tab is active) -->
+  <div id="dashboardPanel" style="display:none">
+    <div class="dash-info">
+      <span class="dash-date" id="dashDate"></span>
+      <button class="dash-print-btn" onclick="window.print()">Download PDF</button>
+    </div>
+    <div class="kpi-row" id="dashKpis"></div>
+    <div class="kpi-row" id="dashTvpiDetails"></div>
+
+    <div class="dash-grid two">
+      <div class="dash-chart"><div id="dFofComp"></div></div>
+      <div class="dash-chart"><div id="dMoicEvo"></div></div>
+    </div>
+    <hr class="dash-divider">
+    <div class="dash-grid full">
+      <div class="dash-chart"><div id="dMoicTrend"></div></div>
+    </div>
+    <div class="dash-grid full">
+      <div class="dash-chart"><div id="dFundMoic"></div></div>
+    </div>
+    <div class="dash-grid full">
+      <div class="dash-chart"><div id="dFundTrends"></div></div>
+    </div>
+    <div class="dash-grid two">
+      <div class="dash-chart"><div id="dTvpiConst"></div></div>
+      <div class="dash-chart"><div id="dTvpiLatest"></div></div>
+    </div>
+    <div class="dash-grid two">
+      <div class="dash-chart"><div id="dTvpiContrib"></div></div>
+      <div class="dash-chart"><div id="dFeeDrag"></div></div>
+    </div>
+    <div class="dash-grid two">
+      <div class="dash-chart"><div id="dCapDist"></div></div>
+      <div class="dash-chart"><div id="dCapUsage"></div></div>
+    </div>
+    <div class="dash-grid full">
+      <div class="dash-chart"><div id="dCapByFund"></div></div>
+    </div>
+    <div class="dash-grid full">
+      <div class="dash-chart"><div id="dCapCalls"></div></div>
+    </div>
+    <div class="dash-grid two">
+      <div class="dash-chart"><div id="dAllocType"></div></div>
+      <div class="dash-chart"><div id="dAllocStage"></div></div>
+    </div>
+    <div class="dash-grid full">
+      <div class="dash-chart"><div id="dSectors"></div></div>
+    </div>
+    <div class="dash-grid full">
+      <div class="dash-chart"><div id="dCommDeploy"></div></div>
+    </div>
+    <div class="dash-grid full">
+      <div class="dash-chart"><div id="dActivity"></div></div>
+    </div>
+    <div class="dash-grid two">
+      <div class="dash-chart"><div id="dFees"></div></div>
+      <div class="dash-chart"><div id="dExpenses"></div></div>
+    </div>
+  </div>
 </div>
 </div>
 
@@ -229,92 +322,92 @@ function initDashboard() {
 const funds = [
   { name: "Khosla Ventures VIII", vintage: 2023,
     tvpiQ4: 1.46, tvpiQ3: 1.36, moicQ4: 1.76, moicQ3: 1.64,
-    pctCalled: 69.1, benchmark: "TOP QUARTILE",
+    pctCalled: 69.1, pctCalledQ3: 69.1, benchmark: "TOP QUARTILE",
     holdings: [["Field AI", 9.61], ["Rhoda AI", 3.74], ["Cognition AI", 3.49]],
     commentary: "Clear outperformer. One of the earliest funds to begin deployment in the portfolio. Several core bets have received meaningful markups. Consistent with its Top Quartile positioning as of Q3-25 benchmark." },
   { name: "Reach IV", vintage: 2023,
     tvpiQ4: 0.99, tvpiQ3: 0.95, moicQ4: 1.16, moicQ3: 1.12,
-    pctCalled: 59.0, benchmark: "BELOW MEDIAN",
+    pctCalled: 59.0, pctCalledQ3: 44.0, benchmark: "BELOW MEDIAN",
     holdings: [["Cartwheel", 1.38], ["GPTZero", 3.00], ["Suraasa", 1.67]],
     commentary: "Deliberately slower deployment: the GP paused strategically while assessing AI\u2019s impact on education and exploring a new vertical in healthcare. Over 70% of invested capital has been deployed from 2024 onward. A 1.16x MOIC confirms the underlying portfolio is beginning to generate value." },
   { name: "GG1", vintage: 2023,
     tvpiQ4: 1.20, tvpiQ3: 1.18, moicQ4: 1.37, moicQ3: 1.33,
-    pctCalled: 89.8, benchmark: "ABOVE MEDIAN",
+    pctCalled: 89.8, pctCalledQ3: 89.8, benchmark: "ABOVE MEDIAN",
     holdings: [["Rillet (GNAU)", 4.21], ["Dust", 3.04], ["Cavela", 4.43]],
     commentary: "Pre-seed fund whose companies naturally take longer to mature. However, portfolio quality is high: in GP calls, companies show strong operational traction and significant valuation upside ahead." },
   { name: "Menlo Ventures XVI", vintage: 2023,
     tvpiQ4: 1.54, tvpiQ3: 1.12, moicQ4: 1.80, moicQ3: 1.23,
-    pctCalled: 90.0, benchmark: "ABOVE MEDIAN",
+    pctCalled: 90.0, pctCalledQ3: 82.0, benchmark: "ABOVE MEDIAN",
     holdings: [["Databricks", 3.30], ["Skild AI", 2.83], ["Good Job Games", 1.38]],
     commentary: "Strong Q4 performance driven by significant markups materializing across the portfolio. This would likely position the fund in Top Quartile comparatively against the Q3-25 benchmark." },
   { name: "XYZ VC Fund IV", vintage: 2023,
     tvpiQ4: 1.10, tvpiQ3: 1.06, moicQ4: 1.29, moicQ3: 1.23,
-    pctCalled: 73.0, benchmark: "BELOW MEDIAN",
+    pctCalled: 73.0, pctCalledQ3: 60.8, benchmark: "BELOW MEDIAN",
     holdings: [["NationGraph", 2.78], ["Yurts", 2.32], ["Pryzm Dynamics", 4.00]],
     commentary: "Although classified as vintage 2023, over 75% of invested capital has been deployed from 2024 onward, making it effectively younger than its benchmark peers. Portfolio under construction with positive early signals." },
   { name: "XYZ Go Faster II", vintage: 2023,
     tvpiQ4: 1.76, tvpiQ3: 1.62, moicQ4: 2.01, moicQ3: 1.83,
-    pctCalled: 98.0, benchmark: "TOP DECILE",
+    pctCalled: 98.0, pctCalledQ3: 98.0, benchmark: "TOP DECILE",
     holdings: [["Forterra Blockchain", 3.33], ["Memoir dba Cohere", 2.28], ["Apex Technology", 2.93]],
     commentary: "Highly concentrated opportunity fund whose bets are delivering. Concentration amplifies the effect of recent markups, with MOIC crossing 2.0x. Best performing fund in the portfolio." },
   { name: "Foothill Ventures III", vintage: 2023,
-    tvpiQ4: null, tvpiQ3: 1.00, moicQ4: null, moicQ3: 1.16,
-    pctCalled: 60.0, benchmark: "BELOW MEDIAN",
+    tvpiQ4: 1.11, tvpiQ3: 1.00, moicQ4: 1.30, moicQ3: 1.16,
+    pctCalled: 60.0, pctCalledQ3: 40.0, benchmark: "BELOW MEDIAN",
     holdings: [["DocEquity dba", 3.41], ["Aether Fuels", 1.80], ["Corvic", 1.44]],
-    commentary: "Deep tech fund at a very early stage, where companies naturally take longer to mature. Over 70% of deployment has occurred from 2024 onward. Q4 data not yet available \u2014 shown at Q3 values." },
+    commentary: "Deep tech fund at a very early stage, where companies naturally take longer to mature. Over 70% of deployment has occurred from 2024 onward. Strong Q3\u2192Q4 progression (+0.11x TVPI) suggests early portfolio value is starting to materialize." },
   { name: "GTMfund II", vintage: 2023,
     tvpiQ4: 1.07, tvpiQ3: 1.07, moicQ4: 1.27, moicQ3: 1.23,
-    pctCalled: 100.0, benchmark: "ABOVE MEDIAN",
+    pctCalled: 100.0, pctCalledQ3: 75.0, benchmark: "ABOVE MEDIAN",
     holdings: [["Writer", 7.15], ["AgentPaid", 2.81], ["Cotiss", 1.68]],
     commentary: "Over 75% of capital has been invested from 2024 onward. Recent developments are expected to translate into visible markups soon. The fund carries a meaningful fee and expense load that takes time to dilute, which weighs on current TVPI." },
   { name: "IVP XVIII", vintage: 2024,
     tvpiQ4: 1.15, tvpiQ3: 1.14, moicQ4: 1.26, moicQ3: 1.27,
-    pctCalled: 50.0, benchmark: null,
+    pctCalled: 50.0, pctCalledQ3: 38.0, benchmark: null,
     holdings: [["Perplexity", 1.84], ["Abridge AI", 1.68], ["Perplexity", 4.92]],
     commentary: "Very encouraging early signals. Perplexity has raised capital at meaningful markups in a very short timeframe. Established late-stage GP with a fund still in construction phase." },
   { name: "NFX Capital Fund IV", vintage: 2024,
     tvpiQ4: 0.95, tvpiQ3: 0.94, moicQ4: 1.03, moicQ3: 1.05,
-    pctCalled: 45.0, benchmark: null,
+    pctCalled: 45.0, pctCalledQ3: 29.0, benchmark: null,
     holdings: [["Koi Security", 2.65], ["Acid Labs Inc", 1.00], ["Evalon AI Ltd.", 1.00]],
     commentary: "45% called. Koi Security (2.65x) is the only meaningful markup so far \u2014 consistent with a seed fund in J-curve." },
   { name: "DFJ Growth V", vintage: 2024,
     tvpiQ4: 1.64, tvpiQ3: 1.24, moicQ4: 2.01, moicQ3: 1.44,
-    pctCalled: 39.0, benchmark: null,
+    pctCalled: 39.0, pctCalledQ3: 35.5, benchmark: null,
     holdings: [["OpenAI", 1.61], ["xAI", 1.46], ["Anduril", 1.24]],
     commentary: "Late-stage investments in highly advanced, high-profile companies that have received very significant markups, generating extraordinary performance in a very short time. Still a fund under construction with 39% called." },
   { name: "GG2", vintage: 2024,
     tvpiQ4: 1.11, tvpiQ3: 1.01, moicQ4: 1.28, moicQ3: 1.11,
-    pctCalled: 42.5, benchmark: null,
+    pctCalled: 42.5, pctCalledQ3: 42.5, benchmark: null,
     holdings: [["Accrual", 3.21], ["Alcove", 1.00], ["Arini AI", 1.00]],
     commentary: "Early-stage investments with good signals and some emerging breakout companies. Fund under construction with a positive trajectory." },
   { name: "G2 Venture Partners III", vintage: 2025,
     tvpiQ4: 0.88, tvpiQ3: 0.90, moicQ4: 1.00, moicQ3: 1.00,
-    pctCalled: 17.0, benchmark: null,
+    pctCalled: 17.0, pctCalledQ3: 17.0, benchmark: null,
     holdings: [["Cast AI", 1.00]],
     commentary: "Too early to draw conclusions on fund performance." },
   { name: "Kindred Ventures IV", vintage: 2025,
     tvpiQ4: 0.97, tvpiQ3: 0.93, moicQ4: 1.03, moicQ3: 1.00,
-    pctCalled: 46.0, benchmark: null,
+    pctCalled: 46.0, pctCalledQ3: 26.0, benchmark: null,
     holdings: [["Frame Payments", 1.00], ["Creatify Lab", 1.00], ["Sophont", 1.00]],
     commentary: "Too early to draw conclusions on fund performance." },
   { name: "Signal Fire Seed V", vintage: 2025,
     tvpiQ4: 1.00, tvpiQ3: 0.96, moicQ4: 1.12, moicQ3: 1.11,
-    pctCalled: 31.5, benchmark: null,
+    pctCalled: 31.5, pctCalledQ3: 16.5, benchmark: null,
     holdings: [["White Rabbit", 1.00], ["Flagler Health", 1.00], ["Conduct", 1.00]],
     commentary: "Too early to draw conclusions on fund performance." },
   { name: "SignalFire Early IV", vintage: 2025,
     tvpiQ4: 0.93, tvpiQ3: 0.95, moicQ4: 1.00, moicQ3: 1.00,
-    pctCalled: 33.0, benchmark: null,
+    pctCalled: 33.0, pctCalledQ3: 29.5, benchmark: null,
     holdings: [["Siro Technology", 1.00], ["Verse Medical", 1.00], ["Affiniti Finance", 1.00]],
     commentary: "Too early to draw conclusions on fund performance." },
   { name: "2048 Ventures III", vintage: 2025,
     tvpiQ4: 0.90, tvpiQ3: 0.93, moicQ4: 1.00, moicQ3: 1.00,
-    pctCalled: 33.3, benchmark: null,
+    pctCalled: 33.3, pctCalledQ3: 33.3, benchmark: null,
     holdings: [["Nimbus Health", 1.00], ["Nionyx Bio", 1.00], ["Colla Health", 1.00]],
     commentary: "The GP\u2019s capital call model (~30% called in a single tranche annually) makes the fund appear more mature than it actually is. Very new fund, still under construction." },
   { name: "S32 Fund 6", vintage: 2025,
     tvpiQ4: 0.78, tvpiQ3: null, moicQ4: 1.01, moicQ3: null,
-    pctCalled: 9.0, benchmark: null,
+    pctCalled: 9.0, pctCalledQ3: null, benchmark: null,
     holdings: [],
     commentary: "Too early to draw conclusions on fund performance." },
 ];
@@ -376,6 +469,21 @@ window.switchTab = function(mode) {
   currentMode = mode;
   document.getElementById('tabTvpi').classList.toggle('active', mode === 'tvpi');
   document.getElementById('tabMoic').classList.toggle('active', mode === 'moic');
+  document.getElementById('tabDash').classList.toggle('active', mode === 'dashboard');
+
+  var isDash = (mode === 'dashboard');
+  ['mainTitle','contextNote','controls','chartWrap','summary'].forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) el.style.display = isDash ? 'none' : '';
+  });
+  document.getElementById('dashboardPanel').style.display = isDash ? 'block' : 'none';
+  document.querySelector('.page').classList.toggle('dash-active', isDash);
+
+  if (isDash) {
+    if (!window._dashRendered) { renderDashboard(); window._dashRendered = true; }
+    return;
+  }
+
   const label = mode === 'tvpi' ? 'TVPI' : 'MOIC';
   document.getElementById('mainTitle').textContent = `${label} vs. % Capital Called \u2014 Q4-25`;
   updateContextNote();
@@ -515,6 +623,9 @@ function render() {
   const yLabel = mode === 'tvpi' ? 'TVPI' : 'MOIC';
   el('text', { x: 14, y: sy((yr.min + yr.max) / 2, mode), textAnchor: 'middle', fontSize: 12, fill: '#4A5A70', fontWeight: 600, textContent: yLabel, transform: `rotate(-90, 14, ${sy((yr.min + yr.max) / 2, mode)})` }, svg);
 
+  // Ghost layer (rendered on top of everything)
+  const ghostLayer = el('g', { style: 'pointer-events:none' }, svg);
+
   // Dots
   funds.forEach(fund => {
     const val = getVal(fund, mode);
@@ -536,8 +647,38 @@ function render() {
       el('circle', { cx, cy: cyy, r: 10.5, fill: 'none', stroke: benchmarkRingColors[fund.benchmark], strokeWidth: 1.8, opacity: 0.5 }, g);
     }
 
-    g.addEventListener('mouseenter', () => { glow.setAttribute('opacity', '0.1'); });
-    g.addEventListener('mouseleave', () => { glow.setAttribute('opacity', '0'); });
+    const q3Val = getQ3(fund, mode);
+    const q3Pct = fund.pctCalledQ3;
+    const hasGhost = q3Val !== null && q3Pct !== null && fund.tvpiQ4 !== null;
+
+    g.addEventListener('mouseenter', () => {
+      glow.setAttribute('opacity', '0.1');
+      if (hasGhost) {
+        const gx = sx(q3Pct), gy = sy(q3Val, mode);
+        const diff = val - q3Val;
+        const lineColor = diff > 0.005 ? '#2ECDA760' : diff < -0.005 ? '#E07A5F60' : '#5A6A8060';
+
+        el('line', { x1: gx, y1: gy, x2: cx, y2: cyy, stroke: lineColor, strokeWidth: 1.5, strokeDasharray: '4 3' }, ghostLayer);
+
+        const angle = Math.atan2(cyy - gy, cx - gx);
+        const aLen = 8;
+        const ax1 = cx - aLen * Math.cos(angle - 0.4);
+        const ay1 = cyy - aLen * Math.sin(angle - 0.4);
+        const ax2 = cx - aLen * Math.cos(angle + 0.4);
+        const ay2 = cyy - aLen * Math.sin(angle + 0.4);
+        el('polygon', { points: `${cx},${cyy} ${ax1},${ay1} ${ax2},${ay2}`, fill: lineColor.replace('60','90') }, ghostLayer);
+
+        el('circle', { cx: gx, cy: gy, r: 6, fill: color, opacity: 0.25, stroke: color, strokeWidth: 1.5, strokeDasharray: '3 2' }, ghostLayer);
+
+        el('text', { x: gx, y: gy - 12, textAnchor: 'middle', fontSize: 9, fontWeight: 600, fill: '#6A7A90', textContent: 'Q3' }, ghostLayer);
+      }
+    });
+
+    g.addEventListener('mouseleave', () => {
+      glow.setAttribute('opacity', '0');
+      ghostLayer.innerHTML = '';
+    });
+
     g.addEventListener('click', (e) => { e.stopPropagation(); showCard(fund, cx, cyy); });
   });
 }
