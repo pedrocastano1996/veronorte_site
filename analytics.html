@@ -11,7 +11,6 @@
 <link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="favicon-192.png" sizes="192x192">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<script src="https://cdn.plot.ly/plotly-2.35.2.min.js" defer></script>
 <script src="dashboard_data.js" defer></script>
 <style>
   /* ── Password Gate ── */
@@ -444,7 +443,16 @@ window.switchTab = function(mode) {
   document.querySelector('.page').classList.toggle('dash-active', isDash);
 
   if (isDash) {
-    if (!window._dashRendered && typeof Plotly !== 'undefined' && typeof renderDashboard === 'function') { renderDashboard(); window._dashRendered = true; }
+    if (!window._dashRendered) {
+      if (typeof Plotly === 'undefined') {
+        var s = document.createElement('script');
+        s.src = 'https://cdn.plot.ly/plotly-2.35.2.min.js';
+        s.onload = function() { if (typeof renderDashboard === 'function') { renderDashboard(); window._dashRendered = true; } };
+        document.head.appendChild(s);
+      } else if (typeof renderDashboard === 'function') {
+        renderDashboard(); window._dashRendered = true;
+      }
+    }
     return;
   }
 
